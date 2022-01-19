@@ -1,20 +1,29 @@
 import styled from "styled-components";
 import { BsPerson, BsPersonFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Room() {
-  const [selected, setSelected] = useState(false);
+export default function Room({ roomSelected, setRoomSelected, id }) {
+  const [color, setColor] = useState("#F1F1F1");
   
   function chooseRoom() {
-    setSelected(!selected);
+    setRoomSelected(id);
   }
+
+  useEffect(() => {
+    if(id !== roomSelected) {
+      setColor("#F1F1F1");
+    }
+    else{
+      setColor("#FFEED2");
+    }
+  }, [roomSelected]);
   return(
     <>
-      <RoomBox>
+      <RoomBox color={color} onClick={chooseRoom}>
         <h1>101</h1>
         <Vacant>
           <BsPerson fontSize="25px"
-            color={selected? "#8FC549" : "black"}
+            // color={selected? "#8FC549" : "black"}
             onClick={() => chooseRoom()}/>
           <BsPersonFill fontSize="25px"/>
         </Vacant>
@@ -28,6 +37,7 @@ const RoomBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: ${(props) => props.color};
   width: 190px;
   height: 45px;
   border: 1px solid #CECECE;

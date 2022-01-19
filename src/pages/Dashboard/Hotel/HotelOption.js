@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function HotelOption({ deselects, setDeselects, id }) {
+export default function HotelOption({ hotelSelected, setHotelSelected, id }) {
   const [color, setColor] = useState("#F1F1F1");
   
   function chooseHotel() {
-    setDeselects(id);
+    setHotelSelected(id);
   }
 
   useEffect(() => {
-    if(id !== deselects) {
+    if(id !== hotelSelected) {
       setColor("#F1F1F1");
     }
     else{
       setColor("#FFEED2");
     }
-  }, [deselects]);
-  
+  }, [hotelSelected]);
+
   return(
-    <OptionBox onClick={chooseHotel} color={color} deselects={deselects}>
+    <OptionBox onClick={chooseHotel} color={color}>
       <img src="https://www.i-decoracao.com/Uploads/i-decoracao.com/ImagensGrandes/imagens-hotel-fantasyland.jpg" alt=""/>
       <h1>Nome do Hotel</h1>
       <InfoHotel>

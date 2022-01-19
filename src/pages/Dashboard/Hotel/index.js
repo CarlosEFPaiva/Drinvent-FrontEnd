@@ -5,17 +5,19 @@ import HotelOption from "./HotelOption";
 import Room from "./Room";
 
 export default function Hotel() {
-  const [deselects, setDeselects] = useState("");
+  const [hotelSelected, setHotelSelected] = useState("");
+  const [roomSelected, setRoomSelected] = useState("");
+
   return(
     <Container>
       <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
       <Subtitle>Primeiro, escolha seu hotel</Subtitle>
       <OptionsContainer>
-        {hoteis.map((h) => <HotelOption setDeselects={setDeselects} deselects={deselects} id={h.id}/> )}
+        {hoteis.map((h) => <HotelOption setHotelSelected={setHotelSelected} hotelSelected={hotelSelected} id={h.id}/> )}
       </OptionsContainer>
       <Subtitle>Ótima pedida! Agora escolha seu quarto:</Subtitle>
       <OptionsContainer>
-        {quartos.map((room) => <Room />)}
+        {quartos.map((room) => <Room roomSelected={roomSelected} setRoomSelected={setRoomSelected} id={room.id}/>)}
       </OptionsContainer>
     </Container>
   );
@@ -51,4 +53,4 @@ const OptionsContainer = styled.div`
 `;
 
 const hoteis = [{ id: 1 }, { id: 2 }, { id: 3 }];
-const quartos = [1, 2, 3, 4, 5, 6];
+const quartos = [{ id: 1,  }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
