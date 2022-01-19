@@ -1,23 +1,21 @@
 import Typography from "@material-ui/core/Typography";
+import { useState } from "react";
 import styled from "styled-components";
 import HotelOption from "./HotelOption";
 import Room from "./Room";
 
 export default function Hotel() {
+  const [deselects, setDeselects] = useState("");
   return(
     <Container>
       <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
       <Subtitle>Primeiro, escolha seu hotel</Subtitle>
       <OptionsContainer>
-        <HotelOption />
-        <HotelOption />
+        {hoteis.map((h) => <HotelOption setDeselects={setDeselects} deselects={deselects} id={h.id}/> )}
       </OptionsContainer>
       <Subtitle>Ótima pedida! Agora escolha seu quarto:</Subtitle>
       <OptionsContainer>
-        <Room />
-        <Room />
-        <Room />
-        <Room />
+        {quartos.map((room) => <Room />)}
       </OptionsContainer>
     </Container>
   );
@@ -33,6 +31,9 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+  ::-webkit-scrollbar { 
+  display: none;
+}
 `;
 
 const Subtitle = styled.div`
@@ -48,3 +49,6 @@ const OptionsContainer = styled.div`
   margin-bottom: 30px;
   flex-wrap: wrap;
 `;
+
+const hoteis = [{ id: 1 }, { id: 2 }, { id: 3 }];
+const quartos = [1, 2, 3, 4, 5, 6];

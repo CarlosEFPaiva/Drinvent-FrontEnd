@@ -1,8 +1,24 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function HotelOption() {
+export default function HotelOption({ deselects, setDeselects, id }) {
+  const [color, setColor] = useState("#F1F1F1");
+  
+  function chooseHotel() {
+    setDeselects(id);
+  }
+
+  useEffect(() => {
+    if(id !== deselects) {
+      setColor("#F1F1F1");
+    }
+    else{
+      setColor("#FFEED2");
+    }
+  }, [deselects]);
+  
   return(
-    <OptionBox>
+    <OptionBox onClick={chooseHotel} color={color} deselects={deselects}>
       <img src="https://www.i-decoracao.com/Uploads/i-decoracao.com/ImagensGrandes/imagens-hotel-fantasyland.jpg" alt=""/>
       <h1>Nome do Hotel</h1>
       <InfoHotel>
@@ -21,11 +37,12 @@ const OptionBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F1F1F1;
+  background-color: ${(props) => props.color};
   width: 196px;
   height: 264px;
   border-radius: 10px;
   margin-right: 20px;
+  margin-bottom: 10px;
 
   img{
     width: 86%;
