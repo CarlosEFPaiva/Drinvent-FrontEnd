@@ -1,7 +1,10 @@
 import TicketSelection from "../../../components/TicketSelection";
+import { TicketInfoProvider } from "../../../contexts/TicketInfoContext";
 
 export default function Payment() {
   return (
-    <TicketSelection />
+    <TicketInfoProvider>
+      <TicketSelection />
+    </TicketInfoProvider>
   );
 }

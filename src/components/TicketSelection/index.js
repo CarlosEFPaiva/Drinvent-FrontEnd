@@ -4,44 +4,44 @@ import Typography from "@material-ui/core/Typography";
 import { ButtonsWrapper } from "./ButtonsWrapper";
 import OptionButton from "./Button";
 import Button from "../Form/Button";
+import TicketInfoContext from "../../contexts/TicketInfoContext";
+import { useContext } from "react";
 
 export default function TicketSelection() {
+  const { tickets, accomodations } = useContext(TicketInfoContext).ticketInfo;
+
   return (
     <>
       <Typography variant="h4">
         Ingresso e pagamento
       </Typography>
-      <StyledSubtitle variant="h6" color="neutral">
+      <StyledSubtitle variant="h6">
         Primeiro, escolha sua modalidade de ingresso
       </StyledSubtitle>
       <ButtonsWrapper>
-        <OptionButton
-          isActive
-          title="Presencial"
-          price={250}
-        />
-        <OptionButton
-          title="Online"
-          price={100}
-        />
+        {tickets.map(({ id, name, price }) => (
+          <OptionButton
+            key={`Ticket Option ${id}`}
+            isActive={id === 1}
+            title={name}
+            price={Number(price)}
+          />
+        ))}
       </ButtonsWrapper>
-      <StyledSubtitle variant="h6" color="neutral">
+      <StyledSubtitle variant="h6">
         Ótimo! Agora escolha sua modalidade de hospedagem
       </StyledSubtitle>
       <ButtonsWrapper>
-        <OptionButton
-          title="Sem Hotel"
-          type="hotel"
-          price={0}
-        />
-        <OptionButton
-          isActive
-          title="Com Hotel"
-          type="hotel"
-          price={350}
-        />
+        {accomodations.map(({ id, name, price }) => (
+          <OptionButton
+            key={`Ticket Option ${id}`}
+            isActive={id === 2}
+            title={name}
+            price={Number(price)}
+          />
+        ))}
       </ButtonsWrapper>
-      <StyledSubtitle variant="h6" color="neutral">
+      <StyledSubtitle variant="h6">
         Fechado! O total ficou em <b>R$ 600</b>. Agora é só confirmar:
       </StyledSubtitle>
       <Button>
