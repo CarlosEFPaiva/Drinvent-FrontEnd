@@ -1,5 +1,4 @@
 import { useState, useEffect, createContext } from "react";
-
 import Splash from "../components/Splash";
 
 import useApi from "../hooks/useApi";
@@ -24,7 +23,7 @@ export function TicketInfoProvider({ children }) {
 
   if (!ticketInfo && !error) {
     return (
-      <Splash loading />
+      <Splash loading minHeight="0px" />
     );
   }
 
