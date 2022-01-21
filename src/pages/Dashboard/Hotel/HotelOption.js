@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function HotelOption({ hotelSelected, setHotelSelected, id }) {
+export default function HotelOption({ hotelSelected, setHotelSelected, hotel }) {
   const [color, setColor] = useState("#F1F1F1");
   
   function chooseHotel() {
-    setHotelSelected(id);
+    setHotelSelected(hotel.id);
   }
 
   useEffect(() => {
-    if(id !== hotelSelected) {
+    if(hotel.id !== hotelSelected) {
       setColor("#F1F1F1");
     }
     else{
@@ -19,15 +19,15 @@ export default function HotelOption({ hotelSelected, setHotelSelected, id }) {
 
   return(
     <OptionBox onClick={chooseHotel} color={color}>
-      <img src="https://www.i-decoracao.com/Uploads/i-decoracao.com/ImagensGrandes/imagens-hotel-fantasyland.jpg" alt=""/>
-      <h1>Nome do Hotel</h1>
+      <img src={hotel.imageUrl} alt=""/>
+      <h1>{hotel.name}</h1>
       <InfoHotel>
         <h2>Tipos de acomodação:</h2>
-        <p>Single e Double</p>
+        <p>{hotel.description}</p>
       </InfoHotel>
       <InfoHotel>
-        <h2>Tipos de acomodação:</h2>
-        <p>15</p>
+        <h2>Vagas disponíveis:</h2>
+        <p>{hotel.roomsAvailable}</p>
       </InfoHotel>
     </OptionBox>
   );

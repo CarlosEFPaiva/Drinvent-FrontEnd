@@ -4,16 +4,22 @@ import styled from "styled-components";
 import UserContext from "../../../contexts/UserContext";
 import HotelOption from "./HotelOption";
 import Room from "./Room";
+import useApi from "../../../hooks/useApi";
 
 export default function Hotel() {
   const [hotelSelected, setHotelSelected] = useState("");
   const [roomSelected, setRoomSelected] = useState("");
   const [userStatus, setUserStatus] = useState({ allow: false, message: "" });
+  const [hotels, setHotels] = useState([]);
   const { userData } = useContext(UserContext);
+  const { hotel } = useApi();
 
   useState(() => {
     if(userData.user.id === 4 && userData.user.ticket.id === 1) {
       setUserStatus({ ...userStatus, allow: true });
+      hotel.getHotels().then(resp => {
+        setHotels(resp.data);
+      });
     }
     if(userData.user.id <= 3) {
       setUserStatus({ ...userStatus, message: "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem" });
@@ -30,7 +36,7 @@ export default function Hotel() {
         <>
           <Subtitle>Primeiro, escolha seu hotel</Subtitle>
           <OptionsContainer>
-            {hoteis.map((h) => <HotelOption key={h.id} setHotelSelected={setHotelSelected} hotelSelected={hotelSelected} id={h.id}/> )}
+            {hotels.map((h) => <HotelOption key={h.id} setHotelSelected={setHotelSelected} hotelSelected={hotelSelected} hotel={h}/> )}
           </OptionsContainer>
           <Subtitle>Ótima pedida! Agora escolha seu quarto:</Subtitle>
           <OptionsContainer>
@@ -82,5 +88,5 @@ const ErrorMessage = styled.div`
 
 `;
 
-const hoteis = [{ id: 1 }, { id: 2 }, { id: 3 }];
+//render rooms
 const quartos = [{ id: 1,  }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
