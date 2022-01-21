@@ -16,9 +16,14 @@ export default function Hotel() {
 
   useState(() => {
     if(userData.user.id === 4 && userData.user.ticket.id === 1) {
-      setUserStatus({ ...userStatus, allow: true });
       hotel.getHotels().then(resp => {
-        setHotels(resp.data);
+        if(resp.data.length === 0) {
+          setUserStatus({ ...userStatus, message: "Não há hoteis diponiveis" });
+        }
+        else{
+          setHotels(resp.data);
+          setUserStatus({ ...userStatus, allow: true });
+        }
       });
     }
     if(userData.user.id <= 3) {
