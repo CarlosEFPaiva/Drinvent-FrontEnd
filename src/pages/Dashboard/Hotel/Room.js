@@ -23,7 +23,6 @@ export default function Room({ roomSelected, setRoomSelected, id }) {
         <h1>101</h1>
         <Vacant>
           <BsPerson fontSize="25px"
-            // color={selected? "#8FC549" : "black"}
             onClick={() => chooseRoom()}/>
           <BsPersonFill fontSize="25px"/>
         </Vacant>

@@ -21,6 +21,7 @@ export default function Hotel() {
           setUserStatus({ ...userStatus, message: "Não há hoteis diponiveis" });
         }
         else{
+          console.log(resp.data);
           setHotels(resp.data);
           setUserStatus({ ...userStatus, allow: true });
         }
@@ -45,7 +46,7 @@ export default function Hotel() {
           </OptionsContainer>
           <Subtitle>Ótima pedida! Agora escolha seu quarto:</Subtitle>
           <OptionsContainer>
-            {quartos.map((room) => <Room key={room.id} roomSelected={roomSelected} setRoomSelected={setRoomSelected} id={room.id}/>)}
+            {/* {quartos.map((room) => <Room key={room.id} roomSelected={roomSelected} setRoomSelected={setRoomSelected} id={room.id}/>)} */}
           </OptionsContainer>
         </>
         : <ErrorMessage>{userStatus.message}</ErrorMessage>}
@@ -94,4 +95,4 @@ const ErrorMessage = styled.div`
 `;
 
 //render rooms
-const quartos = [{ id: 1,  }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
+
