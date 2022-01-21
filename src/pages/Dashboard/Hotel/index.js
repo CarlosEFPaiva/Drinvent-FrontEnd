@@ -5,6 +5,7 @@ import UserContext from "../../../contexts/UserContext";
 import HotelOption from "./HotelOption";
 import Room from "./Room";
 import useApi from "../../../hooks/useApi";
+import UnableMessage from "../../../components/UnableMessage";
 
 export default function Hotel() {
   const [hotelSelected, setHotelSelected] = useState("");
@@ -49,7 +50,7 @@ export default function Hotel() {
             {/* {quartos.map((room) => <Room key={room.id} roomSelected={roomSelected} setRoomSelected={setRoomSelected} id={room.id}/>)} */}
           </OptionsContainer>
         </>
-        : <ErrorMessage>{userStatus.message}</ErrorMessage>}
+        : <UnableMessage width="500px">{userStatus.message}</UnableMessage>}
     </Container>
   );
 }
@@ -81,17 +82,6 @@ const OptionsContainer = styled.div`
   height: auto;
   margin-bottom: 30px;
   flex-wrap: wrap;
-`;
-
-const ErrorMessage = styled.div`
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  color: #8E8E8E;
-  font-size: 20px;
-  width: 55%;
-  margin: auto;
-
 `;
 
 //render rooms

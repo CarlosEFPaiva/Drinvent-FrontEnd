@@ -15,7 +15,7 @@ const StyledTypography = styled(Typography)`
   height: 80px;
   position: absolute;
   top: calc(50% - 80px / 2);
-  left: calc(50% - 400px / 2);
+  left: calc(50% + 50px - ${({ width }) => width} / 2);
   text-align: center;
   line-height: 24px !important;
   color: #8E8E8E;
