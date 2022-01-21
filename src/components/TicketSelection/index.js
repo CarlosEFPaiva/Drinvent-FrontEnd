@@ -18,12 +18,12 @@ export default function TicketSelection() {
       <Typography variant="h4">
         Ingresso e pagamento
       </Typography>
-      <HidableWrapper isHidden={user.status.id >= 2}>
+      <HidableWrapper isHidden={user.status.id !== 1}>
         <UnableMessage>
           Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso
         </UnableMessage>
       </HidableWrapper>
-      <HidableWrapper isHidden={user.status.id < 2}>
+      <HidableWrapper isHidden={user.status.id !== 2}>
         <OptionMenu
           title="Primeiro, escolha sua modalidade de ingresso"
           options={tickets}

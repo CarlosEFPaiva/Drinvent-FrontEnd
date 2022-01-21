@@ -25,6 +25,7 @@ export function TicketInfoProvider({ children }) {
     return (
       <Splash
         loading
+        hidePicture
         minHeight="0px"
         background="#FFF"
         loaderColor="#000"
@@ -37,6 +38,7 @@ export function TicketInfoProvider({ children }) {
     return (
       <Splash
         message={message}
+        hidePicture
         minHeight="0px"
         background="#FFF"
         loaderColor="#000"

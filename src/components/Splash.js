@@ -5,7 +5,7 @@ import Page from "./Page";
 
 import driventLogo from "../assets/images/drivent.png";
 
-export default function Splash({ loading = false, message = "", minHeight = "", hidePicture = true, background = "#FA4098", loaderColor = "#FFF" }) {
+export default function Splash({ loading = false, message = "", minHeight = "", hidePicture = false, background = "#FA4098", loaderColor = "#FFF" }) {
   return (
     <StyledPage background={background} minHeight={minHeight}>
       <Grid>
