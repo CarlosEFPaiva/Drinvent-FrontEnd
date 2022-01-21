@@ -1,17 +1,10 @@
-import styled from "styled-components";
-
-import ConfirmPayment from "../../../components/ConfirmPayment";
+import TicketSelection from "../../../components/TicketSelection";
+import { TicketInfoProvider } from "../../../contexts/TicketInfoContext";
 
 export default function Payment() {
   return (
-    <>
-      <Title>Ingresso e Pagamento</Title>
-      <ConfirmPayment />
-    </>
+    <TicketInfoProvider>
+      <TicketSelection />
+    </TicketInfoProvider>
   );
 }
-
-const Title = styled.h1`
-  font-size: 34px;
-  margin-bottom: 37px;
-`;
