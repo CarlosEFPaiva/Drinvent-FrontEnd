@@ -1,8 +1,9 @@
 import Typography from "@material-ui/core/Typography";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../../../contexts/UserContext";
 import HotelOption from "./HotelOption";
+import Rooms from "./Rooms";
 import Room from "./Room";
 import useApi from "../../../hooks/useApi";
 
@@ -14,20 +15,20 @@ export default function Hotel() {
   const { userData } = useContext(UserContext);
   const { hotel } = useApi();
 
-  useState(() => {
-    if(userData.user.id === 4 && userData.user.ticket.id === 1) {
+  useEffect(() => {
+    if (userData.user.status.id === 4 && userData.user.ticket.id === 1) {
       hotel.getHotels().then(resp => {
-        if(resp.data.length === 0) {
+        if (resp.data.length === 0) {
           setUserStatus({ ...userStatus, message: "Não há hoteis diponiveis" });
         }
-        else{
-          console.log(resp.data);
+        else {
           setHotels(resp.data);
           setUserStatus({ ...userStatus, allow: true });
         }
       });
     }
-    if(userData.user.id <= 3) {
+
+    if (userData.user.status.id <= 3) {
       setUserStatus({ ...userStatus, message: "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem" });
     }
     else {
@@ -35,19 +36,16 @@ export default function Hotel() {
     }
   }, []);
 
-  return(
+  return (
     <Container>
       <StyledTypography variant="h4">Escolha de hotel e quarto</StyledTypography>
       {userStatus.allow ?
         <>
           <Subtitle>Primeiro, escolha seu hotel</Subtitle>
           <OptionsContainer>
-            {hotels.map((h) => <HotelOption key={h.id} setHotelSelected={setHotelSelected} hotelSelected={hotelSelected} hotel={h}/> )}
+            {hotels.map((h) => <HotelOption key={h.id} setHotelSelected={setHotelSelected} hotelSelected={hotelSelected} hotel={h} />)}
           </OptionsContainer>
-          <Subtitle>Ótima pedida! Agora escolha seu quarto:</Subtitle>
-          <OptionsContainer>
-            {/* {quartos.map((room) => <Room key={room.id} roomSelected={roomSelected} setRoomSelected={setRoomSelected} id={room.id}/>)} */}
-          </OptionsContainer>
+          <Rooms hotelSelected={hotelSelected} />
         </>
         : <ErrorMessage>{userStatus.message}</ErrorMessage>}
     </Container>
@@ -93,6 +91,3 @@ const ErrorMessage = styled.div`
   margin: auto;
 
 `;
-
-//render rooms
-
