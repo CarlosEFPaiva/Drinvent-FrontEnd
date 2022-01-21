@@ -6,7 +6,7 @@ import InputMask from "react-input-mask";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
-export default class PaymentForm extends React.Component {
+export default class CreditCardForm extends React.Component {
   state = {
     cvc: "",
     expiry: "",
