@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import React from "react";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import InputMask from "react-input-mask";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 
 export default class PaymentForm extends React.Component {
@@ -11,8 +13,6 @@ export default class PaymentForm extends React.Component {
     focus: "",
     name: "",
     number: "",
-    userId: "",
-    userEmail: "",
   };
 
   handleInputFocus = (e) => {
@@ -24,10 +24,44 @@ export default class PaymentForm extends React.Component {
     this.setState({ [name]: value });
   };
 
+  sendPaymentData = () => {
+    const now = new Date();
+    const actualYear = Number(now.getFullYear().toString().slice(2, 4));
+    const actualMonth = now.getMonth() + 1;
+    let error = [];
+
+    if (
+      (this.state.expiry.replace("/", "").replace("_", "").length !== 4) ||
+      ((Number(this.state.expiry.replace("/", "").slice(2, 4)) === actualYear) && (Number(this.state.expiry.replace("/", "").slice(0, 2)) < actualMonth)) ||
+      (Number(this.state.expiry.replace("/", "").slice(2, 4)) < actualYear) ||
+      (Number(this.state.expiry.replace("/", "").slice(0, 2)) === 0) ||
+      (Number(this.state.expiry.replace("/", "").slice(0, 2)) > 12)
+    ) {
+      error.push("Número do cartão inválido ou expirado");
+    }
+
+    if (this.state.cvc.length !== 3) {
+      error.push("O CVC deve ter 3 dígitos");
+    }
+
+    if (this.state.name.length < 5) {
+      error.push("O nome deve ter pelo menos 5 caracteres");
+    }
+
+    if (error.length > 0) {
+      return error.forEach((e) => {
+        return toast.error(e);
+      });
+    }
+  }
+
   render() {
     return (
       <Payment>
-        <form>
+        <form onSubmit={e => {
+          e.preventDefault();
+          this.sendPaymentData();
+        }}>
           <div className="wrapper">
             <Cards
               cvc={this.state.cvc}
@@ -142,7 +176,7 @@ const Payment = styled.div`
     button {
       display: flex;
       align-items: center;
-      text-align: center;
+      justify-content: center;
       font-size: 14px;
       width: 182px;
       height: 37px;
