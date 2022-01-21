@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import DateFnsUtils from "@date-io/date-fns";
 import Typography from "@material-ui/core/Typography";
@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MenuItem from "@material-ui/core/MenuItem";
+
+import UserContext from "../../contexts/UserContext";
 
 import useApi from "../../hooks/useApi";
 import { useForm } from "../../hooks/useForm";
@@ -26,6 +28,7 @@ dayjs.extend(CustomParseFormat);
 export default function PersonalInformationForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
   const { enrollment, cep } = useApi();
+  const { setUserData } = useContext(UserContext);
 
   const {
     handleSubmit,
@@ -54,8 +57,11 @@ export default function PersonalInformationForm() {
         phone: data.phone.replace(/[^0-9]+/g, "").replace(/^(\d{2})(9?\d{4})(\d{4})$/, "($1) $2-$3"),
       };
 
-      enrollment.save(newData).then(() => {
+      enrollment.save(newData).then((resp) => {
         toast("Salvo com sucesso!");
+        setUserData((storedData) => {
+          return ({ ...storedData, user: resp.data });
+        });
       }).catch((error) => {
         if (error.response?.data?.details) {
           for (const detail of error.response.data.details) {
@@ -65,7 +71,7 @@ export default function PersonalInformationForm() {
           toast("Não foi possível");
         }
         /* eslint-disable-next-line no-console */
-        console.log(error);
+        console.error(error);
       });
     },
 

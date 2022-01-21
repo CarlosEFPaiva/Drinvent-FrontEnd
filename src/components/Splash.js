@@ -5,12 +5,12 @@ import Page from "./Page";
 
 import driventLogo from "../assets/images/drivent.png";
 
-export default function Splash({ loading = false, message = "", minHeight = "" }) {
+export default function Splash({ loading = false, message = "", minHeight = "", hidePicture = false, background = "#FA4098", loaderColor = "#FFF" }) {
   return (
-    <StyledPage background="#FA4098" minHeight={minHeight}>
+    <StyledPage background={background} minHeight={minHeight}>
       <Grid>
-        {loading && <StyledLoader color="#FFFFFF" height={26} width={26} type="Oval" />}
-        <img src={driventLogo} alt="Driven.t" />
+        {loading && <StyledLoader color={loaderColor} height={26} width={26} type="Oval" />}
+        {hidePicture || <img src={driventLogo} alt="Driven.t" />}
       </Grid>
       {message && <Message>{message}</Message>}
     </StyledPage>

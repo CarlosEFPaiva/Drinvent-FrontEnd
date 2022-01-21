@@ -1,39 +1,55 @@
 import Typography from "@material-ui/core/Typography";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../../../contexts/UserContext";
 import HotelOption from "./HotelOption";
 import Room from "./Room";
 import useApi from "../../../hooks/useApi";
+import UnableMessage from "../../../components/UnableMessage";
+import Splash from "../../../components/Splash";
 
 export default function Hotel() {
   const [hotelSelected, setHotelSelected] = useState("");
   const [roomSelected, setRoomSelected] = useState("");
   const [userStatus, setUserStatus] = useState({ allow: false, message: "" });
   const [hotels, setHotels] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { userData } = useContext(UserContext);
   const { hotel } = useApi();
 
-  useState(() => {
-    if(userData.user.id === 4 && userData.user.ticket.id === 1) {
+  useEffect(() => {
+    if(userData.user.status.id === 4 && userData.user.ticket.id === 1) {
       hotel.getHotels().then(resp => {
+        setLoading(false);
         if(resp.data.length === 0) {
           setUserStatus({ ...userStatus, message: "Não há hoteis diponiveis" });
         }
         else{
-          console.log(resp.data);
           setHotels(resp.data);
           setUserStatus({ ...userStatus, allow: true });
         }
       });
-    }
-    if(userData.user.id <= 3) {
+    } else if (userData.user.status.id <= 3) {
+      setLoading(false);
       setUserStatus({ ...userStatus, message: "Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem" });
     }
     else {
+      setLoading(false);
       setUserStatus({ ...userStatus, message: "Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades" });
     }
   }, []);
+
+  if (loading) {
+    return (
+      <Splash
+        loading
+        hidePicture
+        minHeight="0px"
+        background="#FFF"
+        loaderColor="#000"
+      />
+    );
+  }
 
   return(
     <Container>
@@ -49,7 +65,7 @@ export default function Hotel() {
             {/* {quartos.map((room) => <Room key={room.id} roomSelected={roomSelected} setRoomSelected={setRoomSelected} id={room.id}/>)} */}
           </OptionsContainer>
         </>
-        : <ErrorMessage>{userStatus.message}</ErrorMessage>}
+        : <UnableMessage width="500px">{userStatus.message}</UnableMessage>}
     </Container>
   );
 }
@@ -81,17 +97,6 @@ const OptionsContainer = styled.div`
   height: auto;
   margin-bottom: 30px;
   flex-wrap: wrap;
-`;
-
-const ErrorMessage = styled.div`
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  color: #8E8E8E;
-  font-size: 20px;
-  width: 55%;
-  margin: auto;
-
 `;
 
 //render rooms
