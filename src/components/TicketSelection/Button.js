@@ -1,9 +1,9 @@
 import { Typography } from "@material-ui/core";
 import styled from "styled-components";
 
-export default function Button({ isActive, type, title, price }) {
+export default function Button({ isActive, type, onClick, title, price }) {
   return (
-    <StyledButton isActive={isActive}>
+    <StyledButton isActive={isActive} onClick={onClick}>
       <Typography variant="body1">
         {title}
       </Typography>
