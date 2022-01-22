@@ -23,7 +23,6 @@ export default function useTickets() {
     setLoading(true);
     payment.reserveTicket(requestBody).then((resp) => {
       setLoading(false);
-      console.log(resp.data);
       setUserData((storedData) => {
         return ({ ...storedData, user: resp.data });
       });
