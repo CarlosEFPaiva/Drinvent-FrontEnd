@@ -21,6 +21,7 @@ const Subtitle = styled.h2`
   font-size: 20px;
   color: #8E8E8E;
   margin-bottom: 17px;
+  margin-top: 40px;
 `;
 
 const Card = styled.div`

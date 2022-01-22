@@ -8,10 +8,12 @@ import TicketInfoContext from "../../contexts/TicketInfoContext";
 import OptionMenu from "./OptionMenu";
 import Confirmation from "./Confirmation";
 import UnableMessage from "../UnableMessage";
+import ConfirmPayment from "../ConfirmPayment";
 
 export default function TicketSelection() {
   const { tickets, accomodations } = useContext(TicketInfoContext).ticketInfo;
   const { user } = useContext(UserContext).userData;
+  console.log(user);
 
   return (
     <>
@@ -23,7 +25,7 @@ export default function TicketSelection() {
           Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso
         </UnableMessage>
       </HidableWrapper>
-      <HidableWrapper isHidden={user.status.id !== 2}>
+      <HidableWrapper isHidden={user.status.id !== 3}>
         <OptionMenu
           title="Primeiro, escolha sua modalidade de ingresso"
           options={tickets}
@@ -35,6 +37,9 @@ export default function TicketSelection() {
           optionDescription="Accomodation"
         />
         <Confirmation />
+      </HidableWrapper>
+      <HidableWrapper isHidden={user.status.id !== 2}>
+        <ConfirmPayment />
       </HidableWrapper>
     </>
   );
