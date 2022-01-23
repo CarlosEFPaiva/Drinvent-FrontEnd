@@ -3,9 +3,9 @@ import Typography from "@material-ui/core/Typography";
 
 import OptionButton from "./Button";
 
-export default function OptionMenu({ title, options, optionDescription }) {
+export default function OptionMenu({ title, options, optionDescription, onClick, selectedOption, isHidden }) {
   return (
-    <>
+    <HidableWrapper isHidden={isHidden}>
       <StyledSubtitle variant="h6">
         {title}
       </StyledSubtitle>
@@ -13,13 +13,14 @@ export default function OptionMenu({ title, options, optionDescription }) {
         {options.map(({ id, name, price }) => (
           <OptionButton
             key={`${optionDescription} Option ${id}`}
-            isActive={id === 1}
+            isActive={id === selectedOption.id}
+            onClick={() => onClick({ id, name, price: Number(price) })}
             title={name}
-            price={Number(price)}
+            price={price}
           />
         ))}
       </ButtonsWrapper>
-    </>
+    </HidableWrapper>
   );
 }
 
@@ -33,4 +34,8 @@ const StyledSubtitle = styled(Typography)`
 
 const ButtonsWrapper = styled.div`
     display: flex;
+`;
+
+const HidableWrapper = styled.div`
+  display: ${({ isHidden }) => isHidden ? "none" : "block" };
 `;

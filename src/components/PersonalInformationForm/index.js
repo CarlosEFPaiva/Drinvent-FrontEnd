@@ -22,11 +22,13 @@ import { InputWrapper } from "./InputWrapper";
 import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
+import BlankSpace from "../BlankSpace";
 
 dayjs.extend(CustomParseFormat);
 
 export default function PersonalInformationForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { enrollment, cep } = useApi();
   const { setUserData } = useContext(UserContext);
 
@@ -56,13 +58,15 @@ export default function PersonalInformationForm() {
         },
         phone: data.phone.replace(/[^0-9]+/g, "").replace(/^(\d{2})(9?\d{4})(\d{4})$/, "($1) $2-$3"),
       };
-
+      setLoading(true);
       enrollment.save(newData).then((resp) => {
+        setLoading(false);
         toast("Salvo com sucesso!");
         setUserData((storedData) => {
           return ({ ...storedData, user: resp.data });
         });
       }).catch((error) => {
+        setLoading(false);
         if (error.response?.data?.details) {
           for (const detail of error.response.data.details) {
             toast(detail);
@@ -145,6 +149,11 @@ export default function PersonalInformationForm() {
 
   return (
     <>
+      <BlankSpace
+        isTransparent
+        isLoading
+        isShown={dynamicInputIsLoading || loading}
+      />
       <StyledTypography variant="h4">Suas Informações</StyledTypography>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <FormWrapper onSubmit={handleSubmit}>
@@ -279,7 +288,7 @@ export default function PersonalInformationForm() {
           </InputWrapper>
           
           <SubmitContainer>
-            <Button type="submit" disabled={dynamicInputIsLoading}>
+            <Button type="submit" disabled={dynamicInputIsLoading || loading}>
               Salvar
             </Button>
           </SubmitContainer>
