@@ -23,14 +23,26 @@ export function TicketInfoProvider({ children }) {
 
   if (!ticketInfo && !error) {
     return (
-      <Splash loading minHeight="0px" />
+      <Splash
+        loading
+        hidePicture
+        minHeight="0px"
+        background="#FFF"
+        loaderColor="#000"
+      />
     );
   }
 
   if (error) {
     let message = error.response ? error.response.data.message : "Could not connect to server. Please try again later.";
     return (
-      <Splash message={message} />
+      <Splash
+        message={message}
+        hidePicture
+        minHeight="0px"
+        background="#FFF"
+        loaderColor="#000"
+      />
     );
   }
 
