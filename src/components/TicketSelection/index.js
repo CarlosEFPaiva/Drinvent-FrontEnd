@@ -40,7 +40,7 @@ export default function TicketSelection() {
           Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso
         </UnableMessage>
       </HidableWrapper>
-      <HidableWrapper isHidden={user.status.id !== 3}>
+      <HidableWrapper isHidden={user.status.id !== 2}>
         <OptionMenu
           title="Primeiro, escolha sua modalidade de ingresso"
           options={tickets}
@@ -66,9 +66,11 @@ export default function TicketSelection() {
           loading={loading}
         />
       </HidableWrapper>
-      <HidableWrapper isHidden={user.status.id !== 2}>
-        <ConfirmPayment />
-      </HidableWrapper>
+      {user.status.id>2 && 
+        <HidableWrapper isHidden={user.status.id !== 3}>
+          <ConfirmPayment />
+        </HidableWrapper>
+      }
     </>
   );
 }
