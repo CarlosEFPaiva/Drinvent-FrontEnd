@@ -2,11 +2,13 @@ import { useContext } from "react";
 import styled from "styled-components";
 
 import UserContext from "../contexts/UserContext";
+import usePayment from "../hooks/usePayment";
 
 import Confirmed from "./Dashboard/Payment/Confirmed";
 import CreditCardForm from "./Dashboard/Payment/CreditCardForm";
 
 export default function ConfirmPayment() {
+  const { confirmPayment } = usePayment();
   const { user } = useContext(UserContext).userData;
   const finalPrice = Number(user.accomodation.price) + Number(user.ticket.price);
   let userTicket = user.ticket.name;
@@ -20,7 +22,11 @@ export default function ConfirmPayment() {
         <p>R$ {finalPrice}</p>
       </Card>
       <Subtitle>Pagamento</Subtitle>
-      <CreditCardForm />
+      {user.status.id === 3 ? 
+        <CreditCardForm confirmPayment={confirmPayment} />
+        :
+        <Confirmed />
+      }
     </>
   );
 }

@@ -67,7 +67,7 @@ export default function TicketSelection() {
         />
       </HidableWrapper>
       {user.status.id>2 && 
-        <HidableWrapper isHidden={user.status.id !== 3}>
+        <HidableWrapper isHidden={user.status.id !== 3 && user.status.id !== 4}>
           <ConfirmPayment />
         </HidableWrapper>
       }

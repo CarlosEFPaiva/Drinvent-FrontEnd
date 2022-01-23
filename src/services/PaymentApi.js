@@ -9,4 +9,12 @@ export default class PaymentApi extends AuthenticatedApi {
       }
     });
   }
+
+  confirmPayment() {
+    return api.post("/payment/confirmation", {}, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 }

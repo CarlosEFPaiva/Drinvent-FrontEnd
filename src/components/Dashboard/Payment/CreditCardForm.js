@@ -53,6 +53,8 @@ export default class CreditCardForm extends React.Component {
         return toast.error(e);
       });
     }
+
+    this.props.confirmPayment();
   }
 
   render() {
