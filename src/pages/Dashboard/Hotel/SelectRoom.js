@@ -4,6 +4,8 @@ import HotelOption from "./HotelOption";
 import Rooms from "./Rooms";
 import UnableMessage from "../../../components/UnableMessage";
 import { useContext } from "react";
+import { toast } from "react-toastify";
+
 import RoomContext from "../../../contexts/RoomContext";
 import UserContext from "../../../contexts/UserContext";
 import useApi from "../../../hooks/useApi";
@@ -16,7 +18,7 @@ export default function SelectRoom(props) {
 
   function save() {
     saveRoom.saveRoom(selectedRoom, backUser.id).then((res) => {
-      alert("Quarto reservado");
+      toast("Quarto reservado");
       setChoosing(false);
       setHasRoom(false);
       getUserInfo();
