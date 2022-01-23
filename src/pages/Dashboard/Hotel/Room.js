@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { BsPerson, BsPersonFill } from "react-icons/bs";
+import { toast } from "react-toastify";
+
 import UserContext from "../../../contexts/UserContext";
 
 export default function Room(props) {
@@ -18,7 +20,7 @@ export default function Room(props) {
 
     if (thisRoom.id === selectedRoom) {
       setColor("#FFEED2");
-    } else if (thisRoom.id === backUser.rooms.id) {
+    } else if (backUser.rooms !== null && thisRoom.id === backUser.rooms.id) {
       setColor("#FFC76C");
     } else if (thisRoom.occupation !== thisRoom.type.capacity) {
       setColor("");
@@ -29,10 +31,10 @@ export default function Room(props) {
 
   function selectRoom() {
     if (thisRoom.type.capacity - thisRoom.occupation <= 0 && thisRoom.id !== selectedRoom) {
-      alert("Este quarto já está cheio, favor escolher outro");
+      toast("Este quarto já está cheio, favor escolher outro");
     } else {
-      if (thisRoom.id === selectedRoom || thisRoom.id === backUser.rooms.id) {
-        alert("Este é o quarto que está reservado para ti");
+      if (thisRoom.id === selectedRoom || (backUser.rooms !== null && thisRoom.id === backUser.rooms.id)) {
+        toast("Este é o quarto que está reservado para ti");
       }
       else {
         clearPreviusRoom();
@@ -73,7 +75,7 @@ export default function Room(props) {
     <RoomBox innerItemColor={innerItemColor} color={color} onClick={selectRoom}>
       <h1>{thisRoom.number}</h1>
       <Vacant>
-        {contentList.map((person, i) => person ? <BsPersonFill key={i} fontSize="25px" color={(thisRoom.id === selectedRoom || backUser.rooms.id === thisRoom.id) ? defineColor(i) : "black"} /> : <BsPerson key={i} fontSize="25px" />)}
+        {contentList.map((person, i) => person ? <BsPersonFill key={i} fontSize="25px" color={(thisRoom.id === selectedRoom || (backUser.rooms !== null && backUser.rooms.id === thisRoom.id)) ? defineColor(i) : "black"} /> : <BsPerson key={i} fontSize="25px" />)}
       </Vacant>
     </RoomBox >
   );

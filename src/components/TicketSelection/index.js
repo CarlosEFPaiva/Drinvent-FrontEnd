@@ -10,6 +10,7 @@ import useTickets from "../../hooks/useTickets";
 import OptionMenu from "./OptionMenu";
 import Confirmation from "./Confirmation";
 import UnableMessage from "../UnableMessage";
+import ConfirmPayment from "../ConfirmPayment";
 import BlankSpace from "../BlankSpace";
 
 export default function TicketSelection() {
@@ -65,6 +66,11 @@ export default function TicketSelection() {
           loading={loading}
         />
       </HidableWrapper>
+      {user.status.id>2 && 
+        <HidableWrapper isHidden={user.status.id !== 3 && user.status.id !== 4}>
+          <ConfirmPayment />
+        </HidableWrapper>
+      }
     </>
   );
 }
