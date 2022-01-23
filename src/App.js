@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 
 import EventInfoContext, { EventInfoProvider } from "./contexts/EventInfoContext";
 import UserContext, { UserProvider } from "./contexts/UserContext";
+import { RoomProvider } from "./contexts/RoomContext";
 
 export default function App() {
   return (
@@ -37,7 +38,9 @@ export default function App() {
               </ConditionalRoute>
 
               <ConditionalRoute check={ensureAuthenticated} path="/dashboard">
-                <Dashboard />
+                <RoomProvider>
+                  <Dashboard />
+                </RoomProvider>
               </ConditionalRoute>
             </Switch>
           </Router>
