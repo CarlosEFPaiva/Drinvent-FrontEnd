@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
-import { ButtonsWrapper } from "./ButtonsWrapper";
 import OptionButton from "./Button";
 
 export default function OptionMenu({ title, options, optionDescription }) {
@@ -30,4 +29,8 @@ const StyledSubtitle = styled(Typography)`
   & b {
     font-weight: 700;
   }
+`;
+
+const ButtonsWrapper = styled.div`
+    display: flex;
 `;
