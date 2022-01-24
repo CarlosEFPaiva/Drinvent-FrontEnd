@@ -13,8 +13,8 @@ export default function DetailsRoom(props) {
 
   useEffect(() => {
     hotel.getHotels().then((res) => {
-      res.data.map((hotel) => {
-        return hotel.rooms.map((room) => {
+      res.data.forEach((hotel) => {
+        return hotel.rooms.forEach((room) => {
           if (room.id === backUser.rooms.id) {
             setContent(hotel);
           }
@@ -111,5 +111,6 @@ const Button = styled.button`
   font-size: 14px;
   border-radius: 4px;
   border: none;
+  cursor: pointer;
   box-shadow: 0px 2px 10px grey ;
 `;

@@ -50,5 +50,6 @@ const Subtitle = styled.p`
 
 const OptionsContainer = styled.div`
   display: grid;
+  cursor: pointer;
   grid-template-columns: auto auto auto auto;
 `;

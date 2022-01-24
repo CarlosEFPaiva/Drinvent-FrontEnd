@@ -43,6 +43,7 @@ const OptionBox = styled.div`
   border-radius: 10px;
   margin-right: 20px;
   margin-bottom: 10px;
+  cursor: pointer;
 
   img{
     width: 86%;
