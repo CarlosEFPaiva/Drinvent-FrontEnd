@@ -38,7 +38,7 @@ export default function Hotel() {
       return;
     }
 
-    if (userInfo.status.id === 4 && userInfo.ticket.id === 1) {
+    if (userInfo.status.id === 4 && userInfo.accomodation.id === 2) {
       hotel.getHotels().then(resp => {
         setLoading(false);
         if (resp.data.length === 0) {

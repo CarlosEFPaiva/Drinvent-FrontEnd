@@ -7,13 +7,11 @@ export default function Rooms(props) {
   function clearPreviusRoom() {
     if (previousRoomId !== "") {
       hotels.forEach((hotel) => {
-        if (hotel.id === hotelSelected) {
-          hotel.rooms.forEach((room) => {
-            if (room.id === previousRoomId) {
-              room.occupation--;
-            }
-          });
-        }
+        hotel.rooms.forEach((room) => {
+          if (room.id === previousRoomId) {
+            room.occupation--;
+          }
+        });
       });
     }
   }
