@@ -29,10 +29,23 @@ export default function SelectRoom(props) {
     });
   };
 
+  function clearPreviusRoom() {
+    if (previousRoomId !== "") {
+      hotels.forEach((hotel) => {
+        hotel.rooms.forEach((room) => {
+          if (room.id === previousRoomId) {
+            room.occupation--;
+          }
+        });
+      });
+    }
+  }
+
   function cancel() {
     setLoading(true);
     setChoosing(false);
     setHasRoom(false);
+    clearPreviusRoom();
   }
 
   return (
@@ -50,7 +63,7 @@ export default function SelectRoom(props) {
             <OptionsContainer>
               {hotels.map((h) => <HotelOption key={h.id} setHotelSelected={setHotelSelected} hotelSelected={hotelSelected} hotel={h} />)}
             </OptionsContainer>
-            <Rooms hotelSelected={hotelSelected} hotels={hotels} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} previousRoomId={previousRoomId} setPreviousRoomId={setPreviousRoomId} />
+            <Rooms hotelSelected={hotelSelected} hotels={hotels} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} previousRoomId={previousRoomId} setPreviousRoomId={setPreviousRoomId} clearPreviusRoom={clearPreviusRoom} />
             <ButtonDiv>
               {selectedRoom ? <Button onClick={save}>RESERVAR QUARTO</Button> : ""}
               {backUser.roomId ? <Button chossing={choosing} onClick={cancel}>CANCELAR</Button> : ""}

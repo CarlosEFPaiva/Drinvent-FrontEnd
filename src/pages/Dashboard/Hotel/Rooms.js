@@ -2,19 +2,7 @@ import styled from "styled-components";
 import Room from "./Room";
 
 export default function Rooms(props) {
-  const { hotels, hotelSelected, selectedRoom, setSelectedRoom, previousRoomId, setPreviousRoomId } = props;
-
-  function clearPreviusRoom() {
-    if (previousRoomId !== "") {
-      hotels.forEach((hotel) => {
-        hotel.rooms.forEach((room) => {
-          if (room.id === previousRoomId) {
-            room.occupation--;
-          }
-        });
-      });
-    }
-  }
+  const { hotels, hotelSelected, selectedRoom, setSelectedRoom, previousRoomId, setPreviousRoomId, clearPreviusRoom } = props;
 
   return (
     <RoomsContainer hidden={hotelSelected !== "" ? false : true}>
