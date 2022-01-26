@@ -1,13 +1,17 @@
+import { useContext } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import styled from "styled-components";
+import UserContext from "../../../contexts/UserContext";
 
 export default function Confirmed() {
+  const { user } = useContext(UserContext).userData;
+  console.log(user);
   return (
     <Content>
       <CheckIcon/>
       <Text>
         <h1>Pagamento Confirmado!</h1>
-        <h2>Prossiga para escolha de hospedagem e atividades</h2>
+        <h2>{`Prossiga para escolha de${ user.accomodation.id === 2 ? " hospedagem e" : "" } atividades`}</h2>
       </Text>
     </Content>
   );
