@@ -31,10 +31,10 @@ export default function Room(props) {
 
   function selectRoom() {
     if (thisRoom.type.capacity - thisRoom.occupation <= 0 && thisRoom.id !== selectedRoom) {
-      toast("Este quarto já está cheio, favor escolher outro");
+      toast.error("Este quarto já está cheio, favor escolher outro");
     } else {
       if (thisRoom.id === selectedRoom || (backUser.rooms !== null && thisRoom.id === backUser.rooms.id)) {
-        toast("Este é o quarto que está reservado para ti");
+        toast.error("Este é o quarto que está reservado para ti");
       }
       else {
         clearPreviusRoom();

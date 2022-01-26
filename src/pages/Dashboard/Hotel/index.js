@@ -12,15 +12,23 @@ export default function Hotel() {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState("");
-  const [previousRoomId, setPreviousRoomId] = useState(selectedRoom);
+  const [previousRoomId, setPreviousRoomId] = useState("");
   const { userData, setBackUser } = useContext(UserContext);
-  const { choosing } = useContext(RoomContext);
+  const { choosing, setChoosing, hasRoom, setHasRoom } = useContext(RoomContext);
   const { user, hotel } = useApi();
-  const [hasRoom, setHasRoom] = useState(false);
 
   useEffect(() => {
     getUserInfo();
   }, [choosing]);
+
+  function clearStates() {
+    setChoosing(true);
+    setHasRoom(false);
+    setSelectedRoom(false);
+    setLoading(true);
+    setHotelSelected("");
+    setPreviousRoomId(false);
+  }
 
   function getUserInfo() {
     const userId = userData.user.id;
@@ -38,7 +46,7 @@ export default function Hotel() {
       return;
     }
 
-    if (userInfo.status.id === 4 && userInfo.ticket.id === 1) {
+    if (userInfo.status.id === 4 && userInfo.accomodation.id === 2) {
       hotel.getHotels().then(resp => {
         setLoading(false);
         if (resp.data.length === 0) {
@@ -75,7 +83,7 @@ export default function Hotel() {
     <>
       {
         hasRoom ?
-          <DetailsRoom setHasRoom={setHasRoom} setLoading={setLoading} />
+          <DetailsRoom setHasRoom={setHasRoom} setLoading={setLoading} setSelectedRoom={setSelectedRoom} clearStates={clearStates}/>
           :
           <SelectRoom userStatus={userStatus} hotels={hotels} hotelSelected={hotelSelected} setHotelSelected={setHotelSelected} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} previousRoomId={previousRoomId} setPreviousRoomId={setPreviousRoomId} getUserInfo={getUserInfo} setHasRoom={setHasRoom} setLoading={setLoading} />
       }

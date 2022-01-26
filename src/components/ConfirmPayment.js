@@ -3,12 +3,13 @@ import styled from "styled-components";
 
 import UserContext from "../contexts/UserContext";
 import usePayment from "../hooks/usePayment";
+import BlankSpace from "./BlankSpace";
 
 import Confirmed from "./Dashboard/Payment/Confirmed";
 import CreditCardForm from "./Dashboard/Payment/CreditCardForm";
 
 export default function ConfirmPayment() {
-  const { confirmPayment } = usePayment();
+  const { loading, confirmPayment } = usePayment();
   const { user } = useContext(UserContext).userData;
   const finalPrice = Number(user.accomodation.price) + Number(user.ticket.price);
   let userTicket = user.ticket.name;
@@ -16,6 +17,11 @@ export default function ConfirmPayment() {
 
   return (
     <>
+      <BlankSpace
+        isTransparent
+        isLoading
+        isShown={loading}
+      />
       <Subtitle>Ingresso escolhido</Subtitle>
       <Card>
         <h3>{userTicket}</h3>
@@ -23,7 +29,7 @@ export default function ConfirmPayment() {
       </Card>
       <Subtitle>Pagamento</Subtitle>
       {user.status.id === 3 ? 
-        <CreditCardForm confirmPayment={confirmPayment} />
+        <CreditCardForm confirmPayment={confirmPayment} loading={loading} />
         :
         <Confirmed />
       }

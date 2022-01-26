@@ -2,19 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../../../contexts/UserContext";
 import useApi from "../../../hooks/useApi";
 import styled from "styled-components";
-import RoomContext from "../../../contexts/RoomContext";
 
 export default function DetailsRoom(props) {
-  const { setHasRoom, setLoading } = props;
+  const { clearStates } = props;
   const { hotel } = useApi();
   const { backUser } = useContext(UserContext);
-  const { setChoosing } = useContext(RoomContext);
   const [content, setContent] = useState("");
 
   useEffect(() => {
     hotel.getHotels().then((res) => {
-      res.data.map((hotel) => {
-        return hotel.rooms.map((room) => {
+      res.data.forEach((hotel) => {
+        return hotel.rooms.forEach((room) => {
           if (room.id === backUser.rooms.id) {
             setContent(hotel);
           }
@@ -39,11 +37,7 @@ export default function DetailsRoom(props) {
           <HotelInfo>{backUser.rooms.occupation === 1 ? "Somente você" : `Você e mais ${backUser.rooms.occupation - 1}`}</HotelInfo>
         </div>
       </ImageContainer>
-      <Button onClick={() => {
-        setChoosing(true);
-        setHasRoom(false);
-        setLoading(true);
-      }}>
+      <Button onClick={clearStates}>
         Trocar de quarto
       </Button>
     </Container>
@@ -111,5 +105,6 @@ const Button = styled.button`
   font-size: 14px;
   border-radius: 4px;
   border: none;
+  cursor: pointer;
   box-shadow: 0px 2px 10px grey ;
 `;
