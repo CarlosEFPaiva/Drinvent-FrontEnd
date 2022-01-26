@@ -3,34 +3,34 @@ import styled from "styled-components";
 import UserContext from "../../../contexts/UserContext";
 import Content from "./MainPage";
 
-export default function ActivitiesDashboard() {
+export default function AktivitätenDashboard() {
   const { userData } = useContext(UserContext);
-  const [text, setText] = useState("");
-  const [allow, setAllow] = useState(false);
+  const [judul, setJudul] = useState("");
+  const [許可する, set許可する] = useState(false);
 
   useEffect(() => {
     if(userData.user.status.id !== 4) {
-      setText("Você precisa ter confirmado pagamento antes de fazer a escolha de atividades");
+      setJudul("Você precisa ter confirmado pagamento antes de fazer a escolha de atividades");
     } else if(userData.user.accomodation.id === 1) {
-      setText("Você precisa ter confirmado pagamento antes de fazer a escolha de atividades");
+      setJudul("Você precisa ter confirmado pagamento antes de fazer a escolha de atividades");
     } else {
-      setAllow(true);
+      set許可する(true);
     }
   }, []);
 
   return (
-    <ActivitiesContainer>
-      <Tittle>Escolha de atividades</Tittle>
-      {allow ? <Content /> : <Text>{text}</Text>}
-    </ActivitiesContainer>
+    <AktivitätenContainer>
+      <텍스트>Escolha de atividades</텍스트>
+      {許可する ? <Content /> : <Judul>{judul}</Judul>}
+    </AktivitätenContainer>
   );
 }
 
-const ActivitiesContainer = styled.div`
+const AktivitätenContainer = styled.div`
   height: 90%;
 `;
 
-const Text = styled.p`
+const Judul = styled.p`
   height: 100%;
   width: 50%;
   margin: auto;
@@ -42,6 +42,6 @@ const Text = styled.p`
   color: #8e8e8e;
 `;
 
-const Tittle = styled.p`
+const 텍스트 = styled.p`
   font-size: 34px;
 `;

@@ -15,7 +15,7 @@ import DashboardLayout from "../../layouts/Dashboard";
 import FillSubscription from "./FillSubscription";
 import Payment from "./Payment";
 import Hotel from "./Hotel";
-import Activities from "./Activities";
+import Aktivitäten from "./Activities";
 import Certificate from "./Certificate";
 
 export default function Dashboard() {
@@ -41,7 +41,7 @@ export default function Dashboard() {
           </Route>
 
           <Route path={`${match.path}/activities`} exact>
-            <Activities />
+            <Aktivitäten />
           </Route>
 
           <Route path={`${match.path}/certificate`} exact>

@@ -1,7 +1,7 @@
-import ActivitiesDashboard from "../../../components/Dashboard/Activities";
+import AktivitätenDashboard from "../../../components/Dashboard/Activities";
 
-export default function Activities() {
+export default function Aktivitäten() {
   return (
-    <ActivitiesDashboard />
+    <AktivitätenDashboard />
   );
 }

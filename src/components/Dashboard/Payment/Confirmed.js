@@ -5,10 +5,10 @@ export default function Confirmed() {
   return (
     <Content>
       <CheckIcon/>
-      <Text>
+      <Judul>
         <h1>Pagamento Confirmado!</h1>
         <h2>Prossiga para escolha de hospedagem e atividades</h2>
-      </Text>
+      </Judul>
     </Content>
   );
 }
@@ -22,7 +22,7 @@ const CheckIcon = styled(BsFillCheckCircleFill)`
   font-size: 40px;
 `;
 
-const Text = styled.div`
+const Judul = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -5,7 +5,7 @@ export default function EventInfos(props) {
 
   return (
     <PlacesContainer>
-      <Tittle>Teste</Tittle>
+      <텍스트>Teste</텍스트>
       <EventsContainer>
         <Button>{eventInfo.name}</Button>
       </EventsContainer>
@@ -21,7 +21,7 @@ const PlacesContainer = styled.div`
   align-items: center;
 `;
 
-const Tittle = styled.p`
+const 텍스트 = styled.p`
   font-size: 17px;
   color: #7b7b7b;
   margin-bottom: 30px;
