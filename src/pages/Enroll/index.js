@@ -29,10 +29,10 @@ export default function Enroll() {
     event.preventDefault();
 
     if (!email || !password || !confirmPassword) {
-      return toast("Primeiro complete todos os campos");
+      return toast.error("Primeiro complete todos os campos");
     } 
     if (password !== confirmPassword) {
-      return toast("As senhas devem ser iguais!");
+      return toast.error("As senhas devem ser iguais!");
     } 
     setLoadingEnroll(true);
     api.user.signUp(email, password).then(response => {
@@ -42,12 +42,12 @@ export default function Enroll() {
     }).catch(error => {
       setLoadingEnroll(false);
       if (error?.response.status === 409) {
-        return toast("Este e-mail já está sendo utilizado");
+        return toast.error("Este e-mail já está sendo utilizado");
       }
       if (error?.response.status === 422) {
-        return toast("Digite email e senha válidos! A senha deve ter no mínimo 6 caracteres");
+        return toast.error("Digite email e senha válidos! A senha deve ter no mínimo 6 caracteres");
       }
-      return toast("Não foi possível conectar ao servidor!");
+      return toast.error("Não foi possível conectar ao servidor!");
     });
   }
 

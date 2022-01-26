@@ -67,12 +67,10 @@ export default function PersonalInformationForm() {
         });
       }).catch((error) => {
         setLoading(false);
-        if (error.response?.data?.details) {
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
+        if (error.response?.status === 409) {
+          toast.error("Este CPF já está sendo utilizado");
         } else {
-          toast("Não foi possível");
+          toast.error("Não foi possível entrar em contato com o servidor");
         }
         /* eslint-disable-next-line no-console */
         console.error(error);
@@ -115,7 +113,11 @@ export default function PersonalInformationForm() {
         neighborhood: address.neighborhood,
         addressDetail: address.addressDetail,
       });
-    });
+    })
+      .catch(
+        (error) => {
+          toast.error("Não foi possível entrar em contato com o servidor!");
+        });
   }, []);
 
   function isValidCep(cep) {
@@ -159,7 +161,7 @@ export default function PersonalInformationForm() {
         <FormWrapper onSubmit={handleSubmit}>
           <InputWrapper>
             <Input
-              label="Nome Completo"
+              label="Nome Completo*"
               name="name"
               type="text"
               value={data.name || ""}
@@ -170,7 +172,7 @@ export default function PersonalInformationForm() {
           <InputWrapper>
             <Input
               name="cpf"
-              label="CPF"
+              label="CPF*"
               type="text"
               maxLength="14"
               mask="999.999.999-99"
@@ -185,7 +187,7 @@ export default function PersonalInformationForm() {
               error={false}
               helperText={null}
               format="dd-MM-yyyy"
-              label="Data de Nascimento"
+              label="Data de Nascimento*"
               inputVariant="outlined"
               clearable
               value={data.birthday && dayjs(data.birthday, "DD-MM-YYYY").toString()}
@@ -197,7 +199,7 @@ export default function PersonalInformationForm() {
           </InputWrapper>
           <InputWrapper>
             <Input
-              label="Telefone"
+              label="Telefone*"
               mask={data.phone.length < 15 ? "(99) 9999-99999" : "(99) 99999-9999"} // o 9 extra no primeiro é para permitir digitar um número a mais e então passar pra outra máscara - gambiarra? temos
               name="phone"
               value={data.phone || ""}
@@ -207,7 +209,7 @@ export default function PersonalInformationForm() {
           </InputWrapper>
           <InputWrapper>
             <Input
-              label="CEP"
+              label="CEP*"
               name="cep"
               mask="99999-999"
               value={data.cep || ""}
@@ -220,7 +222,7 @@ export default function PersonalInformationForm() {
           </InputWrapper>
           <InputWrapper>
             <Select
-              label="Estado"
+              label="Estado*"
               name="state"
               id="state"
               value={data.state || ""}
@@ -240,7 +242,7 @@ export default function PersonalInformationForm() {
 
           <InputWrapper>
             <Input
-              label="Cidade"
+              label="Cidade*"
               name="city"
               value={data.city || ""}
               onChange={handleChange("city")}
@@ -250,7 +252,7 @@ export default function PersonalInformationForm() {
           </InputWrapper>
           <InputWrapper>
             <Input
-              label="Rua"
+              label="Rua*"
               name="street"
               value={data.street || ""}
               onChange={handleChange("street")}
@@ -261,7 +263,7 @@ export default function PersonalInformationForm() {
 
           <InputWrapper>
             <Input
-              label="Número"
+              label="Número*"
               name="number"
               value={data.number || ""}
               onChange={handleChange("number")}
@@ -270,7 +272,7 @@ export default function PersonalInformationForm() {
           </InputWrapper>
           <InputWrapper>
             <Input
-              label="Bairro"
+              label="Bairro*"
               name="neighborhood"
               value={data.neighborhood || ""}
               onChange={handleChange("neighborhood")}

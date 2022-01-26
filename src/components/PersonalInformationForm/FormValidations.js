@@ -57,14 +57,15 @@ const validations = {
 
   birthday: {
     custom: {
-      isValid: (value) => !value || !isNaN(new Date(value?.split("-").reverse().join("-"))),
-      message: "Selecione uma data de aniversário",
+      isValid: (value) => !isNaN(new Date(value?.split("-").reverse().join("-"))) && isOlderThan18(new Date(value?.split("-").reverse().join("-"))),
+      test: (value) => new Date(value?.split("-").reverse().join("-")).getFullYear,
+      message: "Selecione uma data de aniversário válida",
     },
   },
 
   number: {
     custom: {
-      isValid: (value) => Number(value),
+      isValid: (value) => Number(value) > 0,
       message: "Digite um número válido",
     },
   },
@@ -74,4 +75,17 @@ export default validations;
 
 function isValidString(value) {
   return value || value?.trim();
+}
+
+function isOlderThan18(birthday) {
+  const today = new Date();
+  const hadBirthdayThisYear = (
+    today.getMonth() > birthday.getMonth() ||
+    (
+      today.getMonth() === birthday.getMonth() &&
+      today.getDate() >= birthday.getDate()
+    )
+  );
+  const age = (today.getFullYear() - birthday.getFullYear() - (hadBirthdayThisYear ? 0 : 1));
+  return age >= 18;
 }

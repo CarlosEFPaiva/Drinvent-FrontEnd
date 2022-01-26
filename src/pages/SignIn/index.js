@@ -27,7 +27,7 @@ export default function SignIn() {
     event.preventDefault();
 
     if (!email || !password) {
-      toast("Primeiro complete os campos abaixo");
+      return toast.error("Primeiro complete os campos abaixo");
     }
     setLoadingSignIn(true);
     api.auth.signIn(email, password).then(response => {
@@ -36,11 +36,10 @@ export default function SignIn() {
       /* eslint-disable-next-line no-console */
       console.error(error);
       
-      if (error?.response.status === 401) {
-        toast("Email e/ou senha incorretos");
-      } else {
-        toast("Não foi possível conectar ao servidor!");
-      }
+      if (error.response?.status === 401) {
+        return toast.error("Email e/ou senha incorretos");
+      } 
+      return toast.error("Não foi possível conectar ao servidor!");
     }).then(() => {
       setLoadingSignIn(false);
     });
