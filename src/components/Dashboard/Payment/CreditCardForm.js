@@ -117,7 +117,7 @@ export default class CreditCardForm extends React.Component {
               </div>
             </div>
           </div>
-          <button type="submit">FINALIZAR PAGAMENTO</button>
+          <button type="submit" disabled={this.props.loading}>FINALIZAR PAGAMENTO</button>
         </form>
       </Payment>
     );
