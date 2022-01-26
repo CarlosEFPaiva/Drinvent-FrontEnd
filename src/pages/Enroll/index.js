@@ -27,26 +27,28 @@ export default function Enroll() {
 
   function submit(event) {
     event.preventDefault();
-    setLoadingEnroll(true);
 
+    if (!email || !password || !confirmPassword) {
+      return toast("Primeiro complete todos os campos");
+    } 
     if (password !== confirmPassword) {
-      toast("As senhas devem ser iguais!");
-    } else {
-      api.user.signUp(email, password).then(response => {
-        toast("Inscrito com sucesso! Por favor, faça login.");
-        history.push("/sign-in");
-      }).catch(error => {
-        if (error.response) {
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
-        } else {
-          toast("Não foi possível conectar ao servidor!");
-        }
-      }).then(() => {
-        setLoadingEnroll(false);
-      });
-    }
+      return toast("As senhas devem ser iguais!");
+    } 
+    setLoadingEnroll(true);
+    api.user.signUp(email, password).then(response => {
+      toast("Inscrito com sucesso! Por favor, faça login.");
+      setLoadingEnroll(false);
+      history.push("/sign-in");
+    }).catch(error => {
+      setLoadingEnroll(false);
+      if (error?.response.status === 409) {
+        return toast("Este e-mail já está sendo utilizado");
+      }
+      if (error?.response.status === 422) {
+        return toast("Digite email e senha válidos! A senha deve ter no mínimo 6 caracteres");
+      }
+      return toast("Não foi possível conectar ao servidor!");
+    });
   }
 
   return (
