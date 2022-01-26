@@ -30,6 +30,14 @@ export default class CreditCardForm extends React.Component {
     const actualMonth = now.getMonth() + 1;
     let error = [];
 
+    if (this.state.number?.replaceAll("_", "").length !== 19) {
+      error.push("Número de cartão inválido");
+    }
+
+    if (this.state.name.length < 5) {
+      error.push("O nome deve ter pelo menos 5 caracteres");
+    }
+
     if (
       (this.state.expiry.replace("/", "").replace("_", "").length !== 4) ||
       ((Number(this.state.expiry.replace("/", "").slice(2, 4)) === actualYear) && (Number(this.state.expiry.replace("/", "").slice(0, 2)) < actualMonth)) ||
@@ -37,15 +45,11 @@ export default class CreditCardForm extends React.Component {
       (Number(this.state.expiry.replace("/", "").slice(0, 2)) === 0) ||
       (Number(this.state.expiry.replace("/", "").slice(0, 2)) > 12)
     ) {
-      error.push("Número do cartão inválido ou expirado");
+      error.push("Validade do cartão inválida ou expirada");
     }
-
-    if (this.state.cvc.length !== 3) {
-      error.push("O CVC deve ter 3 dígitos");
-    }
-
-    if (this.state.name.length < 5) {
-      error.push("O nome deve ter pelo menos 5 caracteres");
+    const cvcLength = this.state.cvc.replaceAll("_", "").length;
+    if (cvcLength !== 3 && cvcLength !== 4) {
+      error.push("O CVC deve ter 3 ou 4 dígitos");
     }
 
     if (error.length > 0) {
@@ -102,7 +106,7 @@ export default class CreditCardForm extends React.Component {
                   onFocus={this.handleInputFocus}
                 />
                 <InputMask
-                  mask="999"
+                  mask="9999"
                   className="short"
                   type="text"
                   name="cvc"

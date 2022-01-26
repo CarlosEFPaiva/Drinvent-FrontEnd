@@ -58,8 +58,7 @@ const validations = {
   birthday: {
     custom: {
       isValid: (value) => !isNaN(new Date(value?.split("-").reverse().join("-"))) && isOlderThan18(new Date(value?.split("-").reverse().join("-"))),
-      test: (value) => new Date(value?.split("-").reverse().join("-")).getFullYear,
-      message: "Selecione uma data de aniversário válida",
+      message: "Selecione uma data de aniversário válida - Você deve ser maior de idade",
     },
   },
 
