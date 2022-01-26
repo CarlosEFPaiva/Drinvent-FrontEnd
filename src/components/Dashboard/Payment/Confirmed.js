@@ -5,7 +5,7 @@ import UserContext from "../../../contexts/UserContext";
 
 export default function Confirmed() {
   const { user } = useContext(UserContext).userData;
-  console.log(user);
+
   return (
     <Content>
       <CheckIcon/>
