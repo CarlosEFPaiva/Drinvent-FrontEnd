@@ -1,11 +1,23 @@
 import styled from "styled-components";
 import WeekDays from "./WeekDays";
 import EventsDetails from "./EventsTable";
+import { useEffect, useState } from "react";
+import useApi from "../../../hooks/useApi";
 
 export default function Content() {
+  const [dates, setDates] = useState([]);
+  const { talks } = useApi();
+
+  useEffect(() => {
+    talks.getDates()
+      .then((res) => {
+        setDates(res.data);
+      });
+  }, []);
+
   return (
     <Container>
-      <WeekDays />
+      <WeekDays dates={dates}/>
       <EventsDetails />
     </Container>
   );

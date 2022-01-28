@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
-export default function WeekDays() {
+export default function WeekDays({ dates }) {
+  const weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+
   return (
     <DaysContainer>
       {
-        days.map((day, key) => {
-          return <Button key={key}>{day}</Button>;
+        dates.map((day, key) => {
+          let date = new Date(day.name);
+          let DATE = `${weekdays[date.getDay()]} - ${date.getDate()}/${date.getMonth()}`;
+          return <Button key={key}>{DATE}</Button>;
         })
       }
     </DaysContainer>
@@ -30,4 +34,3 @@ const Button = styled.button`
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, .2);
 `;
 
-const days = ["Sexta, 22/10", "Sábado, 23/10", "Domingo, 24/10"];
