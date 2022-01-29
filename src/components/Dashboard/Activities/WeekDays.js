@@ -1,15 +1,25 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import ActivitiesInfoContext from "../../../contexts/ActivitiesInfoContext";
 
-export default function WeekDays({ dates }) {
+export default function WeekDays() {
   const weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  const { dates, selectedDate, setSelectedDate } = useContext(ActivitiesInfoContext);
 
   return (
     <DaysContainer>
       {
         dates.map((day, key) => {
-          let date = new Date(day.name);
-          let DATE = `${weekdays[date.getDay()]} - ${date.getDate()}/${date.getMonth()}`;
-          return <Button key={key}>{DATE}</Button>;
+          let rawdate = new Date(day.name);
+          let filteredDate = `${weekdays[rawdate.getDay()]} - ${rawdate.getDate()}/${rawdate.getMonth() + 1}`;
+          return (
+            <Button
+              key={"dateButton" + key}
+              onClick={() => setSelectedDate(day)}
+              isSelected={day.id === selectedDate?.id}
+            >
+              {filteredDate}
+            </Button>);
         })
       }
     </DaysContainer>
@@ -18,7 +28,7 @@ export default function WeekDays({ dates }) {
 
 const DaysContainer = styled.div`
   width: 100%;
-  margin: 40px 0;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -31,6 +41,11 @@ const Button = styled.button`
   font-size: 14px;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+  background-color: ${({ isSelected }) => isSelected ? "#FFD37D" : ""};
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, .2);
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 

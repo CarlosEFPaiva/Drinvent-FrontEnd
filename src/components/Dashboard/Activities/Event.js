@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
-export default function EventInfos(props) {
-  const { eventInfo } = props;
-
+export default function EventInfos({ title, events }) {
   return (
     <PlacesContainer>
-      <Tittle>Teste</Tittle>
+      <Title>{title}</Title>
       <EventsContainer>
-        <Button>{eventInfo.name}</Button>
+        {
+          events.map(({ name }, key) => (
+            <Button key={key}>{name}</Button>
+          ))
+        }
       </EventsContainer>
     </PlacesContainer>
   );
@@ -21,7 +23,7 @@ const PlacesContainer = styled.div`
   align-items: center;
 `;
 
-const Tittle = styled.p`
+const Title = styled.p`
   font-size: 17px;
   color: #7b7b7b;
   margin-bottom: 30px;
@@ -32,7 +34,8 @@ const EventsContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center
 `;
 
 const Button = styled.button`
@@ -40,6 +43,7 @@ const Button = styled.button`
   height: 100px;
   margin: 10px 0;
   border: none;
+  cursor: pointer;
   background-color: #f1f1ff;
   border-radius: 5px;
 
