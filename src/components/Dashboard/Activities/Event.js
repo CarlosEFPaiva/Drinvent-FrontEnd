@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BsBoxArrowInRight } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { defineGridPosition } from "../../../helpers/TimeHelper";
 
 export default function EventInfos({ title, events }) {
   return (
@@ -11,7 +12,7 @@ export default function EventInfos({ title, events }) {
           <Title>{title}</Title>
           <EventsContainer>
             {events.map(e => (
-              <Button>
+              <Button top={defineGridPosition(e.startTime)} bottom={defineGridPosition(e.endTime)}>
                 <Infos>
                   <h1>{e.name}</h1>
                   <h2>{e.startTime.slice(0, 5)} - {e.endTime.slice(0, 5)} </h2>
@@ -23,7 +24,7 @@ export default function EventInfos({ title, events }) {
                     <p style={{ "color": "#078632" }}>Inscrito</p>
                   </Availability>
                   :
-                  e.vancancies === 0 ?
+                  e.vacancies === 0 ?
                     <Availability>
                       <IoIosCloseCircleOutline size="16px" color="#CC6666" />
                       <p style={{ "color": "#CC6666" }}>Esgotado</p>
@@ -66,16 +67,17 @@ const Title = styled.p`
 const EventsContainer = styled.div`
   border: 1px solid #d7d7d7;
   width: 100%;
-  height: 360px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 395px;
+  display: grid;
+  grid-template-rows: repeat(8, 1fr);
+  row-gap: 10px;
+  padding: 15px;
 `;
 
 const Button = styled.button`
-  width: 90%;
-  min-height: 80px;
-  margin: 10px 0;
+  width: 100%;
+  grid-row-start: ${({ top }) => top};
+  grid-row-end: ${({ bottom }) => bottom};
   border: none;
   cursor: pointer;
   background-color: #f1f1ff;
@@ -83,14 +85,14 @@ const Button = styled.button`
   display: flex;
   padding: 10px;
   cursor: pointer;
-
+  
   :hover{
     background-color: #d0d0d7;
   }
 `;
 
 const Infos = styled.div`
-  width: 199px;
+  width: 75%;
   font-size: 12px;
   color: #343434;
   line-height: 14px;
@@ -113,7 +115,7 @@ const Separator = styled.div`
 `;
 
 const Availability = styled.div`
-  width: 66px;
+  width: 25%;
   font-size: 9px;
   height: 100%;
   display: flex;
