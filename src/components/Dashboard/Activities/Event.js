@@ -3,60 +3,39 @@ import { BsBoxArrowInRight } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaRegCheckCircle } from "react-icons/fa";
 
-export default function EventInfos(props) {
+export default function EventInfos({ title, events }) {
   return (
     <>
       <Box>
         <PlacesContainer>
-          <Tittle>Auditório Principal</Tittle>
+          <Title>{title}</Title>
           <EventsContainer>
-            <Button>
-              <Infos>
-                <h1>derhgdfh</h1>
-                <h2>asdasdas</h2>
-              </Infos>
-              <Separator></Separator>
-              <Availability>
-                <IoIosCloseCircleOutline size="16px" color="#CC6666" />
-                Esgotado
-              </Availability>
-            </Button>
-          </EventsContainer>
-        </PlacesContainer>
-      </Box>
-      <Box>
-        <PlacesContainer>
-          <Tittle>Auditório Lateral</Tittle>
-          <EventsContainer>
-            <Button>
-              <Infos>
-                <h1>derhgdfh</h1>
-                <h2>asdasdas</h2>
-              </Infos>
-              <Separator></Separator>
-              <Availability>
-                <IoIosCloseCircleOutline size="16px" color="#CC6666" />
-                Esgotado
-              </Availability>
-            </Button>
-          </EventsContainer>
-        </PlacesContainer>
-      </Box>
-      <Box>
-        <PlacesContainer>
-          <Tittle>Sala de Workshop</Tittle>
-          <EventsContainer>
-            <Button>
-              <Infos>
-                <h1>derhgdfh</h1>
-                <h2>asdasdas</h2>
-              </Infos>
-              <Separator></Separator>
-              <Availability>
-                <IoIosCloseCircleOutline size="16px" color="#CC6666" />
-                Esgotado
-              </Availability>
-            </Button>
+            {events.map(e => (
+              <Button>
+                <Infos>
+                  <h1>{e.name}</h1>
+                  <h2>{e.startTime.slice(0, 5)} - {e.endTime.slice(0, 5)} </h2>
+                </Infos>
+                <Separator></Separator>
+                {e.isUserSubscribed ?
+                  <Availability>
+                    <FaRegCheckCircle size="16px" color="#078632" />
+                    <p style={{ "color": "#078632" }}>Inscrito</p>
+                  </Availability>
+                  :
+                  e.vancancies === 0 ?
+                    <Availability>
+                      <IoIosCloseCircleOutline size="16px" color="#CC6666" />
+                      <p style={{ "color": "#CC6666" }}>Esgotado</p>
+                    </Availability>
+                    :
+                    <Availability>
+                      <BsBoxArrowInRight size="16px" color="#078632" />
+                      <p style={{ "color": "#078632" }}>{e.vacancies} vagas</p>
+                    </Availability>
+                }
+              </Button>
+            ))}         
           </EventsContainer>
         </PlacesContainer>
       </Box>
@@ -78,7 +57,7 @@ const PlacesContainer = styled.div`
   align-items: center;
 `;
 
-const Tittle = styled.p`
+const Title = styled.p`
   font-size: 17px;
   color: #7b7b7b;
   margin-bottom: 15px;
@@ -98,6 +77,7 @@ const Button = styled.button`
   min-height: 80px;
   margin: 10px 0;
   border: none;
+  cursor: pointer;
   background-color: #f1f1ff;
   border-radius: 5px;
   display: flex;
@@ -121,6 +101,7 @@ const Infos = styled.div`
   h1{
     font-weight: bold;
     margin-bottom: 5px;
+    text-align: left;
   }
 `;
 
@@ -139,4 +120,8 @@ const Availability = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  p{
+    margin-top: 3px;
+  }
 `;

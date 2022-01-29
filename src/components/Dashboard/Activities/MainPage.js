@@ -1,24 +1,23 @@
 import styled from "styled-components";
 import WeekDays from "./WeekDays";
 import EventsDetails from "./EventsTable";
-import { useEffect, useState } from "react";
-import useApi from "../../../hooks/useApi";
+import { Typography } from "@material-ui/core";
+import { useContext } from "react";
+import ActivitiesInfoContext from "../../../contexts/ActivitiesInfoContext";
 
 export default function Content() {
-  const [dates, setDates] = useState([]);
-  const { talks } = useApi();
-
-  useEffect(() => {
-    talks.getDates()
-      .then((res) => {
-        setDates(res.data);
-      });
-  }, []);
-
+  const { activities } = useContext(ActivitiesInfoContext);
   return (
     <Container>
-      <WeekDays dates={dates}/>
-      <EventsDetails />
+      {
+        activities ?
+          "" :
+          <StyledSubtitle variant="h6">
+            Primeiro, filtre pelo dia do evento:
+          </StyledSubtitle>
+      }
+      <WeekDays />
+      {activities ? <EventsDetails /> : ""}
     </Container>
   );
 }
@@ -29,4 +28,14 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+`;
+
+const StyledSubtitle = styled(Typography)`
+  width: 100%;
+  margin: 0px 0px 20px !important;
+  font-weight:400 !important;
+  color: #8E8E8E;
+  & b {
+    font-weight: 700;
+  }
 `;

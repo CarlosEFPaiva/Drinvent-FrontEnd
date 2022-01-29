@@ -11,8 +11,8 @@ export default function ActivitiesDashboard() {
   useEffect(() => {
     if(userData.user.status.id !== 4) {
       setText("Você precisa ter confirmado pagamento antes de fazer a escolha de atividades");
-    } else if(userData.user.accomodation.id === 1) {
-      setText("Você precisa ter confirmado pagamento antes de fazer a escolha de atividades");
+    } else if(userData.user.ticket.id === 2) {
+      setText("Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.");
     } else {
       setAllow(true);
     }
@@ -20,7 +20,7 @@ export default function ActivitiesDashboard() {
 
   return (
     <ActivitiesContainer>
-      <Tittle>Escolha de atividades</Tittle>
+      <Title>Escolha de atividades</Title>
       {allow ? <Content /> : <Text>{text}</Text>}
     </ActivitiesContainer>
   );
@@ -42,6 +42,7 @@ const Text = styled.p`
   color: #8e8e8e;
 `;
 
-const Tittle = styled.p`
+const Title = styled.p`
   font-size: 34px;
+  margin-bottom: 24px;
 `;
