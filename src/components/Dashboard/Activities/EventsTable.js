@@ -1,13 +1,16 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import ActivitiesInfoContext from "../../../contexts/ActivitiesInfoContext";
 import EventInfos from "./Event";
 
 export default function EventsDetails() {
+  const { activities } = useContext(ActivitiesInfoContext);
   return (
     <EventsContainer>
       {
-        events.map((eventInfo, key) => {
+        activities.map(({ locationName, events }, key) => {
           return (
-            <EventInfos key={key} eventInfo={eventInfo} />
+            <EventInfos key={key} title={ locationName } events={events} />
           );
         })
       }
@@ -21,21 +24,3 @@ const EventsContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-const events = [
-  {
-    name: "Pc gamer",
-    startTime: "1000",
-    endTime: "1500"
-  },
-  {
-    name: "Notebook",
-    startTime: "1600",
-    endTime: "1630"
-  },
-  {
-    name: "Sla meo",
-    startTime: "1700",
-    endTime: "1900"
-  },
-];

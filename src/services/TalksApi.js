@@ -9,4 +9,12 @@ export default class TalksApi extends AuthenticatedApi {
       }
     });
   }
+
+  getActivitiesByDate(dateId) {
+    return api.get(`/talks/events/${dateId}`, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  };
 }
