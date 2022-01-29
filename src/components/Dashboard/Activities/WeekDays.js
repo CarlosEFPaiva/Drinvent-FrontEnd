@@ -25,7 +25,7 @@ const DaysContainer = styled.div`
 `;
 
 const Button = styled.button`
-  margin-right: 10px;
+  margin-right: 17px;
   height: 40px;
   width: 130px;
   font-size: 14px;

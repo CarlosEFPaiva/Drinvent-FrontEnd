@@ -4,38 +4,34 @@ import EventInfos from "./Event";
 export default function EventsDetails() {
   return (
     <EventsContainer>
-      {
-        events.map((eventInfo, key) => {
-          return (
-            <EventInfos key={key} eventInfo={eventInfo} />
-          );
-        })
-      }
+      <EventInfos events={events} />
     </EventsContainer>
   );
 }
 
 const EventsContainer = styled.div`
-  width: 100%;
   height: 100%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
 `;
 
 const events = [
   {
     name: "Pc gamer",
     startTime: "1000",
-    endTime: "1500"
+    endTime: "1100",
+    location: "Auditório Principal"
   },
   {
     name: "Notebook",
     startTime: "1600",
-    endTime: "1630"
+    endTime: "1630",
+    location: "Auditório Lateral"
   },
   {
     name: "Sla meo",
     startTime: "1700",
-    endTime: "1900"
+    endTime: "1900",
+    location: "Sala de Workshop"
   },
 ];
