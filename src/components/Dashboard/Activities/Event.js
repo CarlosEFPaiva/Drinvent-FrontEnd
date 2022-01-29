@@ -7,8 +7,8 @@ export default function EventInfos(props) {
   return (
     <>
       <Box>
-        <Tittle>Teste</Tittle>
         <PlacesContainer>
+          <Tittle>Auditório Principal</Tittle>
           <EventsContainer>
             <Button>
               <Infos>
@@ -25,8 +25,8 @@ export default function EventInfos(props) {
         </PlacesContainer>
       </Box>
       <Box>
-        <Tittle>Teste</Tittle>
         <PlacesContainer>
+          <Tittle>Auditório Lateral</Tittle>
           <EventsContainer>
             <Button>
               <Infos>
@@ -43,8 +43,8 @@ export default function EventInfos(props) {
         </PlacesContainer>
       </Box>
       <Box>
-        <Tittle>Teste</Tittle>
         <PlacesContainer>
+          <Tittle>Sala de Workshop</Tittle>
           <EventsContainer>
             <Button>
               <Infos>
@@ -102,6 +102,7 @@ const Button = styled.button`
   border-radius: 5px;
   display: flex;
   padding: 10px;
+  cursor: pointer;
 
   :hover{
     background-color: #d0d0d7;
