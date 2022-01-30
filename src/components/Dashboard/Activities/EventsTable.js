@@ -4,15 +4,17 @@ import ActivitiesInfoContext from "../../../contexts/ActivitiesInfoContext";
 import EventInfos from "./Event";
 
 export default function EventsDetails() {
-  const { activities } = useContext(ActivitiesInfoContext);
+  const { selectedDate, hideActivities, activities } = useContext(ActivitiesInfoContext);
   return (
     <EventsContainer>
       {
-        activities.map(({ locationName, events }, key) => {
-          return (
-            <EventInfos key={key} title={ locationName } events={events} />
-          );
-        })
+        !hideActivities ? 
+          activities.map(({ locationName, events }, index) => {
+            return (
+              <EventInfos key={"EventInfo" + selectedDate.name + index} title={ locationName } events={events} />
+            );
+          }) :
+          ""
       }
     </EventsContainer>
   );

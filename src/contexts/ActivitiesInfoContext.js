@@ -11,6 +11,7 @@ export function ActivityInfoProvider({ children }) {
   const [dates, setDates] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [activities, setActivities] = useState(null);
+  const [hideActivities, setHideActivities] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { talks } = useApi();
@@ -29,9 +30,11 @@ export function ActivityInfoProvider({ children }) {
   useEffect(() => {
     if (selectedDate) {
       setLoading(true);
+      setHideActivities(true);
       talks.getActivitiesByDate(selectedDate.id)
         .then((res) => {
           setActivities(filterEventsByLocation(res.data));
+          setHideActivities(false);
           setLoading(false);
         }).catch(error => {
         /* eslint-disable-next-line no-console */
@@ -68,7 +71,7 @@ export function ActivityInfoProvider({ children }) {
   }
 
   return (
-    <ActivitiesInfoContext.Provider value={{ dates, selectedDate, setSelectedDate, activities, loading, setLoading, activityInfoError: error }}>
+    <ActivitiesInfoContext.Provider value={{ dates, selectedDate, setSelectedDate, activities, hideActivities, loading, setLoading, activityInfoError: error }}>
       <BlankSpace
         isTransparent
         isLoading
