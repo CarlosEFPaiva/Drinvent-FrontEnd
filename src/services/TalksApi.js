@@ -17,4 +17,20 @@ export default class TalksApi extends AuthenticatedApi {
       }
     });
   };
+
+  subscribe(eventId) {
+    return api.post("/talks/subscribe", { eventId }, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  };
+
+  unsubscribe(eventId) {
+    return api.post("/talks/unsubscribe", { eventId }, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  };
 }
