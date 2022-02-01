@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../../../contexts/UserContext";
+import UnableMessage from "../../UnableMessage";
 import Content from "./MainPage";
 
 export default function ActivitiesDashboard() {
@@ -21,25 +22,13 @@ export default function ActivitiesDashboard() {
   return (
     <ActivitiesContainer>
       <Title>Escolha de atividades</Title>
-      {allow ? <Content /> : <Text>{text}</Text>}
+      {allow ? <Content /> : <UnableMessage>{text}</UnableMessage>}
     </ActivitiesContainer>
   );
 }
 
 const ActivitiesContainer = styled.div`
   height: 90%;
-`;
-
-const Text = styled.p`
-  height: 100%;
-  width: 50%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 20px;
-  color: #8e8e8e;
 `;
 
 const Title = styled.p`
