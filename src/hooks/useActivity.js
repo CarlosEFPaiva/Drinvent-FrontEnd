@@ -46,9 +46,9 @@ export default function useActivity({ event, setLoading }) {
       });
   }
 
-  function activityOnClick() {
-    const confirmationTitle = isSubscribed ? "Deseja cancelar sua inscrição?" : "Deseja se inscrever no evento?";
-    sendConfirmAlert(confirmationTitle, "Sim")
+  function activityOnClick(eventName) {
+    const confirmationTitle = isSubscribed ? "Deseja cancelar sua inscrição nesse evento?" : "Deseja se inscrever nesse evento?";
+    sendConfirmAlert(confirmationTitle, "Sim", eventName)
       .then((alert) => {
         if (alert.isConfirmed) {
           setIsClicked(true);

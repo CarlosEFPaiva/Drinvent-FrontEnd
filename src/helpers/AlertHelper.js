@@ -18,9 +18,10 @@ function sendSuccessAlert(html) {
   });
 }
 
-function sendConfirmAlert(title, buttonText) {
+function sendConfirmAlert(title, buttonText, talkTitle) {
   return Swal.fire({
     title,
+    text: `"${talkTitle}"`, 
     showCancelButton: true,
     confirmButtonText: buttonText,
     cancelButtonText: "Cancelar",

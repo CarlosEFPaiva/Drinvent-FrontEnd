@@ -23,7 +23,7 @@ export default function ActivityBox({ event }) {
       bottom={defineGridPosition(event.endTime)}
       disabled={event.vacancies === 0}
       isClicked={isClicked}
-      onClick={activityOnClick}
+      onClick={() => activityOnClick(event.name)}
     >
       <Infos>
         <h1>{event.name}</h1>
