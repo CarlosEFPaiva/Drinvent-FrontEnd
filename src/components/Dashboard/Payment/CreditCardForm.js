@@ -13,6 +13,31 @@ export default class CreditCardForm extends React.Component {
     focus: "",
     name: "",
     number: "",
+    issuer: "",
+  };
+
+  numberPattern = (cardIssuer) => {
+    const nonStandardPatterns = [
+      { issuer: "amex", mask: "9999 999999 99999", length: 15, example: "34... 51... 78..." },
+      { issuer: "dinersclub", mask: "9999 999999 9999", length: 14, example: "36... 51... 78..." },
+    ];
+    const standardPattern = { mask: "9999 9999 9999 9999", length: 16, example: "49... 51... 36... 37..." };
+    const finalPattern = nonStandardPatterns.find(({ issuer }) => issuer === cardIssuer) || standardPattern;
+    return finalPattern;
+  }
+
+  cvcPattern = (cardIssuer) => {
+    const nonStandardPatterns = [
+      { issuer: "amex", mask: "9999", length: 4 },
+      { issuer: "discover", mask: "9999", length: 4 },
+    ];
+    const standardPattern = { mask: "999", length: 3 };
+    const finalPattern = nonStandardPatterns.find(({ issuer }) => issuer === cardIssuer) || standardPattern;
+    return finalPattern;
+  }
+
+  handleCallback = ({ issuer }) => {
+    this.setState({ issuer });
   };
 
   handleInputFocus = (e) => {
@@ -28,9 +53,11 @@ export default class CreditCardForm extends React.Component {
     const now = new Date();
     const actualYear = Number(now.getFullYear().toString().slice(2, 4));
     const actualMonth = now.getMonth() + 1;
+    const numberPattern = this.numberPattern(this.state.issuer);
+    const cvcPattern = this.cvcPattern(this.state.issuer);
     let error = [];
-
-    if (this.state.number?.replaceAll("_", "").length !== 19) {
+    
+    if (this.state.number?.replaceAll("_", "").replaceAll(" ", "").length !== numberPattern.length) {
       error.push("Número de cartão inválido");
     }
 
@@ -48,8 +75,8 @@ export default class CreditCardForm extends React.Component {
       error.push("Validade do cartão inválida ou expirada");
     }
     const cvcLength = this.state.cvc.replaceAll("_", "").length;
-    if (cvcLength !== 3 && cvcLength !== 4) {
-      error.push("O CVC deve ter 3 ou 4 dígitos");
+    if (cvcLength !== cvcPattern.length) {
+      error.push(`O CVC para este cartão deve ter ${cvcPattern.length} dígitos`);
     }
 
     if (error.length > 0) {
@@ -75,10 +102,11 @@ export default class CreditCardForm extends React.Component {
               focused={this.state.focus}
               name={this.state.name}
               number={this.state.number}
+              callback={this.handleCallback}
             />
             <div className="inputWrapper">
               <InputMask
-                mask="9999 9999 9999 9999"
+                mask={this.numberPattern(this.state.issuer).mask}
                 className="long"
                 type="text"
                 name="number"
@@ -86,7 +114,7 @@ export default class CreditCardForm extends React.Component {
                 onChange={this.handleInputChange}
                 onFocus={this.handleInputFocus}
               />
-              <h2>E.g.: 49..., 51..., 36... 37...</h2>
+              <h2>E.g.: { this.numberPattern(this.state.issuer).example}</h2>
               <InputMask
                 className="long"
                 type="text"
@@ -106,7 +134,7 @@ export default class CreditCardForm extends React.Component {
                   onFocus={this.handleInputFocus}
                 />
                 <InputMask
-                  mask="9999"
+                  mask={this.cvcPattern(this.state.issuer).mask}
                   className="short"
                   type="text"
                   name="cvc"
@@ -177,6 +205,7 @@ const Payment = styled.div`
         font-size: 16px;
         margin-left: 15px;
         margin-bottom: 5px;
+        color: #333;
       }
 
     button {
