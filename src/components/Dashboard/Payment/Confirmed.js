@@ -5,13 +5,20 @@ import UserContext from "../../../contexts/UserContext";
 
 export default function Confirmed() {
   const { user } = useContext(UserContext).userData;
+  const conditionedText = [
+    { condition: user.ticket.id === 2, text: "Aproveite o evento!" },
+    { condition: user.accomodation.id === 2, text: "Prossiga para escolha de hospedagem e atividades" },
+    { condition: user.accomodation.id === 1, text: "Prossiga para escolha atividades" },
+  ];
+
+  const text = conditionedText.find(({ condition }) => condition === true).text;
 
   return (
     <Content>
       <CheckIcon/>
       <Text>
         <h1>Pagamento Confirmado!</h1>
-        <h2>{`Prossiga para escolha de${ user.accomodation.id === 2 ? " hospedagem e" : "" } atividades`}</h2>
+        <h2>{text}</h2>
       </Text>
     </Content>
   );
