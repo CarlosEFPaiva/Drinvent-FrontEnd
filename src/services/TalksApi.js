@@ -33,4 +33,12 @@ export default class TalksApi extends AuthenticatedApi {
       }
     });
   };
+
+  getActivitiesByUserId() {
+    return api.get("/talks/user-talks-info", {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  };
 }
