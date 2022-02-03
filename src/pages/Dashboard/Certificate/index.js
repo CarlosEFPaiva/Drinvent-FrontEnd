@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
+import { PDFDownloadLink, StyleSheet } from "@react-pdf/renderer";
 
 import UserContext from "../../../contexts/UserContext";
 import UnableMessage from "../../../components/UnableMessage";
+import CertificateFile from "../../../components/Dashboard/Certificate/CertificateFile";
 
-import drivent from "../../../assets/images/drivent.png";
 import useApi from "../../../hooks/useApi";
 
-export default function CertificateDashboard() {
+export default function Certificate() {
   const { userData } = useContext(UserContext);
   const { enrollment } = useApi();
   const [username, setUsername] = useState  (null);
@@ -35,22 +36,35 @@ export default function CertificateDashboard() {
 
   else {
     return (
-      <Box>
-        <Header>
-          <img src={drivent} alt="drivent"/>
-        </Header>
-        <Content>
-          <h1>CERTIFICADO</h1>
-          <p>
-            Certificamos que <strong>{username}</strong> participou do evento <strong>Driven.t</strong> com o objetivo de desenvolver habilidades em tecnologia através de experiências práticas, entre os dias <strong>22 e 24 de Outubro de 2021</strong>, com <strong>carga horária</strong> total de <strong>12 horas</strong> na modalidade <strong>{userData.user.ticket.name}</strong>.
-          </p>
-        </Content>
-      </Box>
+      <CertificateContainer>
+        <PDFDownloadLink
+          document={<CertificateFile username={username} modality={userData.user.ticket.name}/>}
+          fileName="certificado_drivent.pdf"
+          style={styles.button}
+          children={
+            <CertificateImage>
+              <CertificateFile username={username} modality={userData.user.ticket.name}/>
+            </CertificateImage>
+          }
+        >
+        </PDFDownloadLink>
+      </CertificateContainer>
     );
   }
 }
 
-const Box = styled.div`
+const styles = StyleSheet.create({
+  button: { 
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    textDecoration: "none"
+  }
+});
+
+const CertificateContainer = styled.div`
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.4);
   border-radius: 15px 0;
   width: 100%;
@@ -60,41 +74,12 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const Header = styled.div`
-  border-radius: 15px 0 0;
-  height: 100px;
+const CertificateImage = styled.div`
+  height: 100%;
   width: 100%;
-  background-color: #FA4098;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img{
-    height: 30px;
-  }
-`;
-
-const Content = styled.div`
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  
-  h1{
-    font-size: 35px;
-    color: #FA4098;
-    font-weight: bold;
-    margin-top: 80px;
-  }
-
-  p{
-    margin-top: 30px;
-    line-height: 25px;
-    letter-spacing: 2px;
-    text-align: center;
-    font-size: 20px;
-  }
+  border: 5px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to left, #FFD780, #FA4098);
 `;
 
 const Title = styled.p`
