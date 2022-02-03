@@ -1,4 +1,4 @@
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { Page, Text, View, Image, Document, StyleSheet } from "@react-pdf/renderer";
 
 import drivent from "../../../assets/images/drivent.png";
 
@@ -39,16 +39,22 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   title: {
+    fontSize: "20px",
+  },
+  name: {
     fontWeight: "bold",
     fontSize: "32px",
-    marginTop: "50px",
     color: "#FA4098"
+  },
+  eventName: {
+    fontWeight: "bold",
+    fontSize: "32px",
+    margin: "20px 0"
   },
   subTitle: {
     fontSize: "20px",
     padding: "0 80px",
     textAlign: "center",
-    marginTop: "40px"
   }
 });
 
@@ -57,13 +63,18 @@ export default function CertificateFile({ username, modality }) {
     <Document style={styles.document}>
       <Page size="A4" style={styles.page}>
         <View style={styles.logoSection}>
-          <Text style={styles.logoTitle}><img src={drivent} alt="logo" /></Text>
+          <Image src={drivent}></Image>
         </View>
         <View style={styles.section}>
-          <Text style={styles.title}>CERTIFICADO</Text>
+          <Text style={styles.title}>Certificamos que</Text>
         </View>
         <View style={styles.section}>
-          <Text style={styles.subTitle}>Certificamos que <strong>{username}</strong> participou do evento <strong>Driven.t</strong> com o objetivo de desenvolver habilidades em tecnologia através de experiências práticas, entre os dias <strong>22 e 24 de Outubro de 2021</strong>, com <strong>carga horária</strong> total de <strong>12 horas</strong> na modalidade <strong>{modality}</strong>.</Text>
+          <Text style={styles.name}>{username}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.subTitle}>participou do evento</Text>
+          <Text style={styles.eventName}>Driven.t</Text>
+          <Text style={styles.subTitle}>com o objetivo de desenvolver habilidades em tecnologia através de experiências práticas, entre os dias 22 e 24 de Outubro de 2021, com carga horária total de 12 horas na modalidade {modality}.</Text>
         </View>
       </Page>
     </Document>

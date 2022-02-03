@@ -11,7 +11,7 @@ import useApi from "../../../hooks/useApi";
 export default function Certificate() {
   const { userData } = useContext(UserContext);
   const { enrollment } = useApi();
-  const [username, setUsername] = useState  (null);
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
@@ -36,19 +36,21 @@ export default function Certificate() {
 
   else {
     return (
-      <CertificateContainer>
-        <PDFDownloadLink
-          document={<CertificateFile username={username} modality={userData.user.ticket.name}/>}
-          fileName="certificado_drivent.pdf"
-          style={styles.button}
-          children={
-            <CertificateImage>
-              <CertificateFile username={username} modality={userData.user.ticket.name}/>
-            </CertificateImage>
-          }
-        >
-        </PDFDownloadLink>
-      </CertificateContainer>
+      <>
+        <Message>Agradecemos sua participação no evento! Clique no seu certificado para fazer o download.</Message>
+        <CertificateContainer>
+          <PDFDownloadLink
+            document={<CertificateFile username={username} modality={userData.user.ticket.name}/>}
+            fileName="certificado_drivent.pdf"
+            style={styles.button}
+            children={
+              <CertificateImage>
+                <CertificateFile username={username} modality={userData.user.ticket.name}/>
+              </CertificateImage>
+            }
+          />
+        </CertificateContainer>
+      </>
     );
   }
 }
@@ -68,7 +70,7 @@ const CertificateContainer = styled.div`
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.4);
   border-radius: 15px 0;
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,4 +87,12 @@ const CertificateImage = styled.div`
 const Title = styled.p`
   font-size: 34px;
   margin-bottom: 24px;
+`;
+
+const Message = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #8E8E8E;
 `;
