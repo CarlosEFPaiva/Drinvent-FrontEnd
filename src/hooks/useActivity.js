@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useApi from "./useApi";
 import { toast } from "react-toastify";
+import { sendConfirmAlert } from "../helpers/AlertHelper";
 
 export default function useActivity({ event, setLoading }) {
   const [isSubscribed, setIsSubscribed] = useState(event.isUserSubscribed);
@@ -36,7 +37,7 @@ export default function useActivity({ event, setLoading }) {
         setIsSubscribed(false);
         setLoading(false);
         setIsClicked(false);
-        return toast("Desinscrição feita com sucesso!");
+        return toast("Inscrição cancelada com sucesso!");
       })
       .catch(() => {
         setLoading(false);
@@ -45,12 +46,18 @@ export default function useActivity({ event, setLoading }) {
       });
   }
 
-  function activityOnClick() {
-    setIsClicked(true);
-    if (!isSubscribed) {
-      return attemptSubscription();
-    }
-    return attemptUnsubscription();
+  function activityOnClick(eventName) {
+    const confirmationTitle = isSubscribed ? "Deseja cancelar sua inscrição nesse evento?" : "Deseja se inscrever nesse evento?";
+    sendConfirmAlert(confirmationTitle, "Sim", eventName)
+      .then((alert) => {
+        if (alert.isConfirmed) {
+          setIsClicked(true);
+          if (!isSubscribed) {
+            return attemptSubscription();
+          }
+          return attemptUnsubscription();
+        }
+      });
   }
 
   return {

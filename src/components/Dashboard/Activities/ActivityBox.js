@@ -13,7 +13,7 @@ export default function ActivityBox({ event }) {
   const conditionedStyles = [
     { condition: isSubscribed, component: <FaRegCheckCircle size="16px" color="#078632" />, text: "Inscrito", textColor: "#078632" },
     { condition: event.vacancies === 0, component: <IoIosCloseCircleOutline size="16px" color="#CC6666" />, text: "Esgotado", textColor: "#CC6666" },
-    { condition: event.vacancies !== 0, component: <BsBoxArrowInRight size="16px" color="#078632" />, text: `${event.vacancies} vagas`, textColor: "#078632" },
+    { condition: event.vacancies !== 0, component: <BsBoxArrowInRight size="16px" color="#078632" />, text: `${event.vacancies} ${event.vacancies === 1 ? "vaga" : "vagas"}`, textColor: "#078632" },
   ];
 
   const styles = conditionedStyles.find(({ condition }) => condition === true);
@@ -23,7 +23,7 @@ export default function ActivityBox({ event }) {
       bottom={defineGridPosition(event.endTime)}
       disabled={event.vacancies === 0}
       isClicked={isClicked}
-      onClick={activityOnClick}
+      onClick={() => activityOnClick(event.name)}
     >
       <Infos>
         <h1>{event.name}</h1>
