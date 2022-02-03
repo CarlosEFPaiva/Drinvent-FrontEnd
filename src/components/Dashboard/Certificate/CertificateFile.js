@@ -30,8 +30,6 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: "40px",
     color: "#FFF",
-    fontFamily: "Lexend Deca",
-    fontWeight: "bold"
   },
   logoTitle: {
     fontSize: "30px",
