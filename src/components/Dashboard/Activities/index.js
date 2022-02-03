@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import UserContext from "../../../contexts/UserContext";
+import UnableMessage from "../../UnableMessage";
 import useApi from "../../../hooks/useApi";
 import Content from "./MainPage";
 import { Modal } from "@material-ui/core";
@@ -54,7 +55,7 @@ export default function ActivitiesDashboard() {
           <ModalContent content={content} />
         </ModalContainer>
       </Modal>
-      {allow ? <Content /> : <Text>{text}</Text>}
+      {allow ? <Content /> : <UnableMessage>{text}</UnableMessage>}
     </ActivitiesContainer>
   );
 }
@@ -62,18 +63,6 @@ export default function ActivitiesDashboard() {
 const ActivitiesContainer = styled.div`
   height: 90%;
   position: relative;
-`;
-
-const Text = styled.p`
-  height: 100%;
-  width: 50%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 20px;
-  color: #8e8e8e;
 `;
 
 const Title = styled.p`
