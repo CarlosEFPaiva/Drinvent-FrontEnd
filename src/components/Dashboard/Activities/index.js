@@ -14,6 +14,7 @@ export default function ActivitiesDashboard() {
   const [allow, setAllow] = useState(false);
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  const [isHidden, setIsHidden] = useState(true);
 
   useEffect(() => {
     if (userData.user.status.id !== 4) {
@@ -22,6 +23,7 @@ export default function ActivitiesDashboard() {
       setText("Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.");
     } else {
       setAllow(true);
+      setIsHidden(false);
     }
   }, []);
 
@@ -43,7 +45,7 @@ export default function ActivitiesDashboard() {
   return (
     <ActivitiesContainer>
       <Title>Escolha de atividades</Title>
-      <Button onClick={getActivites}>Suas Atividades</Button>
+      <Button onClick={getActivites} isHidden={isHidden}>Suas Atividades</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -82,6 +84,9 @@ const Title = styled.p`
 `;
 
 const Button = styled.button`
+  display: ${(props) => props.isHidden ? "none" : "flex"};
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 0;
   right: 0;
