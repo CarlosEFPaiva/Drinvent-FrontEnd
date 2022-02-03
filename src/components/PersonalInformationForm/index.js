@@ -23,14 +23,23 @@ import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
 import BlankSpace from "../BlankSpace";
+import { makeStyles } from "@material-ui/core";
 
 dayjs.extend(CustomParseFormat);
+const useStyles = makeStyles({
+  input: {
+    "&:invalid": {
+      color: "#d65959",
+    }
+  }
+});
 
 export default function PersonalInformationForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const { enrollment, cep } = useApi();
   const { setUserData } = useContext(UserContext);
+  const classes = useStyles();
 
   const {
     handleSubmit,
@@ -178,6 +187,7 @@ export default function PersonalInformationForm() {
               mask="999.999.999-99"
               value={data.cpf || ""}
               onChange={handleChange("cpf")}
+              inputProps={{  className: classes.input, pattern: ".{14,14}" }}
             />
             {errors.cpf && <ErrorMsg>{errors.cpf}</ErrorMsg>}
           </InputWrapper>
@@ -204,6 +214,7 @@ export default function PersonalInformationForm() {
               name="phone"
               value={data.phone || ""}
               onChange={handleChange("phone")}
+              inputProps={{  className: classes.input, pattern: ".{14,}" }}
             />
             {errors.phone && <ErrorMsg>{errors.phone}</ErrorMsg>}
           </InputWrapper>
@@ -217,6 +228,7 @@ export default function PersonalInformationForm() {
                 handleChange("cep")(e);
                 handleCepChanges(e);
               }}
+              inputProps={{  className: classes.input, pattern: ".{9,9}" }}
             />
             {errors.cep && <ErrorMsg>{errors.cep}</ErrorMsg>}
           </InputWrapper>
@@ -257,6 +269,7 @@ export default function PersonalInformationForm() {
               value={data.street || ""}
               onChange={handleChange("street")}
               disabled={dynamicInputIsLoading}
+              inputProps={{  className: classes.input, pattern: ".{3,}" }}
             />
             {errors.street && <ErrorMsg>{errors.street}</ErrorMsg>}
           </InputWrapper>
@@ -277,6 +290,7 @@ export default function PersonalInformationForm() {
               value={data.neighborhood || ""}
               onChange={handleChange("neighborhood")}
               disabled={dynamicInputIsLoading}
+              inputProps={{  className: classes.input, pattern: ".{3,}" }}
             />
             {errors.neighborhood && <ErrorMsg>{errors.neighborhood}</ErrorMsg>}
           </InputWrapper>
