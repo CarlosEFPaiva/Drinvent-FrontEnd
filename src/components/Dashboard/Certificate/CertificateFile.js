@@ -27,6 +27,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "110px"
   },
+  logo: {
+    fontSize: "40px",
+    color: "#FFF",
+    fontFamily: "Lexend Deca",
+    fontWeight: "bold"
+  },
   logoTitle: {
     fontSize: "30px",
   },
@@ -42,12 +48,10 @@ const styles = StyleSheet.create({
     fontSize: "20px",
   },
   name: {
-    fontWeight: "bold",
     fontSize: "32px",
     color: "#FA4098"
   },
   eventName: {
-    fontWeight: "bold",
     fontSize: "32px",
     margin: "20px 0"
   },
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     fontSize: "20px",
     padding: "0 80px",
     textAlign: "center",
-  }
+  },
 });
 
 export default function CertificateFile({ username, modality }) {
@@ -63,7 +67,7 @@ export default function CertificateFile({ username, modality }) {
     <Document style={styles.document}>
       <Page size="A4" style={styles.page}>
         <View style={styles.logoSection}>
-          <Image src={drivent}></Image>
+          <Text style={styles.logo}>Driven.t</Text>
         </View>
         <View style={styles.section}>
           <Text style={styles.title}>Certificamos que</Text>
